@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+<!-- Login page -->
+{% load static %}
+
+{% block content %}
+<!-- Messages -->
+
+{% for error in err %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{error}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+
+
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+{% endif %}
+<div class="box">
+
+    <!-- SIGN UP -->
+    <div class="signup-box">
+        <form method="post" action="{% url 'DashBoard' %}" class="aos-init aos-animate">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="First name" name="FirstName" vlaue="{{fname}}"
+                    required>
+                <input type="text" class="form-control" placeholder="Last name" name="LastName" value="{{lname}}"
+                    required>
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="User name" name="UserName" value="{{username}}"
+                    required>
+                <input type="email" class="form-control" placeholder="Email" name="Email" value="{{email}}" required>
+            </div>
+            <div class="textbox">
+                <input type="password" class="form-control" placeholder="Password" name="password1" required>
+            </div>
+            <div class="textbox">
+                <input type="password" class="form-control" placeholder="Confirm password" name="password2" required>
+            </div>
+            <button type="submit" class="btn" name="signup">Sign up</button>
+            <p class="signup-text" onclick="login()">Have an account?<br><a href="{% url 'Login' %}">login!</a></p>
+        </form>
+    </div>
+
+</div>
+
+
+<style>
+
+</style>
+{% endblock %}
