@@ -1,7 +1,39 @@
 {% extends "base.html" %}
 {% load static %}
-<nav>
-    <h1>
-        welcome User
-    </h1>
-</nav>
+
+{% block content %}
+
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+<body>
+
+    <div class="cover">
+        <!-- information about the user -->
+        <div class="user_info">
+
+            <h1>welcome {{user}}</h1>
+        </div>
+        First Name: {{user.first_name}} <br>
+        Last Name: {{user.last_name}} <br>
+        Email: {{user.email}} <br><br><br>
+
+    </div>
+    <!-- courses and activities of the user -->
+    <div class="activities">
+        <h3> You have 0 courses registered</h3>
+    </div>
+    <hr>
+</body>
+
+{% endblock %}

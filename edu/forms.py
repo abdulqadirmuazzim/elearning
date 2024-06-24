@@ -26,7 +26,7 @@ class register(UserCreationForm):
 
     def clean_username(self):
         user = self.cleaned_data["UserName"]
-        if User.objects.filter(username_iexact=user).exists():
+        if User.objects.filter(username=user).exists():
             raise forms.ValidationError("Username already taken")
         return user
 
@@ -34,18 +34,9 @@ class register(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data["Email"]
-        if User.objects.filter(email_iexact=email).exists():
+        if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Email already in use")
         return email
-
-    # def save(self, *args, **kwargs):
-    #     user = super().save(commit=False)
-    #     user.set_password(self.cleaned_data['password'])
-    #     if commit:
-    #         user.save()
-    #         if hasattr(self, 'save_m2m'):
-    #             self.save_m2m()
-    #     return user
 
 
 # contact form

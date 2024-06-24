@@ -95,40 +95,98 @@ def contact(req):
 
 
 def login_user(req):
-    return render(req, "login.html")
+    if req.method == "POST":
+
+        # form = AF(request=req, data=req.POST)
+        username = req.POST["username"]
+        password = req.POST["password"]
+
+        if "@" in username:
+            username = User.objects.get(email=username).username
+
+            user = authenticate(username=username, password=password)
+        else:
+            user = authenticate(username=username, password=password)
+
+        # authenticate the user
+        # if they are authenticated
+        # print
+        if user is not None:
+            # log them in
+            login(req, user=user)
+            messages.success(req, "You have logged in successfully")
+            return render(req, "dashboard.html", {"user": username})
+        else:
+            messages.error(req, "Invalid User name or password")
+            print(username, user)
+            return render(
+                req, "login.html", {"username": username, "password": password}
+            )
+
+    if req.user.is_authenticated:
+        return redirect("DashBoard")
+    else:
+        return render(req, "login.html")
 
 
 def register_user(req):
-    return render(req, "signup.html")
-
-
-def logout_user(req):
-    # log the user out
-    logout(req)
-    return redirect("Home")
-
-
-def dash(req):
-
     if req.method == "POST":
         # if the user is signing up
-        if "signup" in req.POST:
 
-            form = register(req.POST)
+        form = register(req.POST)
+        # check
 
-            # if form is valid
-            if form.is_valid():
-                # save
-                userform = form.save(commit=False)
+        # if form is valid
+        if form.is_valid():
+            # save
+            userform = form.save(commit=False)
 
-                # get the username and password
-                username = form.cleaned_data.get("UserName")
-                password = form.cleaned_data.get("password1")
-                email = form.cleaned_data["Email"]
-                fname = form.cleaned_data["FirstName"]
-                lname = form.cleaned_data["LastName"]
+            # get the username and password
+            username = form.cleaned_data.get("UserName")
+            password = form.cleaned_data.get("password1")
+            email = form.cleaned_data["Email"]
+            fname = form.cleaned_data["FirstName"]
+            lname = form.cleaned_data["LastName"]
 
+            # check to see if username exists
+            is_user = User.objects.filter(username=username).exists()
+
+            # check to see if email exists
+            is_email = User.objects.filter(email=email).exists()
+
+            if is_user:
+                # if username exists
+                form.add_error("UserName", "This username is taken")
+                return render(
+                    req,
+                    "signup.html",
+                    {
+                        "err": form.errors.values(),
+                        "f_name": fname,
+                        "l_name": lname,
+                        "email": email,
+                        "user_name": username,
+                    },
+                )
+
+            elif is_email:
+                # if email exists
+                form.add_error("Email", "This email is in use")
+                return render(
+                    req,
+                    "signup.html",
+                    {
+                        "err": form.errors.values(),
+                        "f_name": fname,
+                        "l_name": lname,
+                        "email": email,
+                        "user_name": username,
+                    },
+                )
+
+            else:
                 # create a new user
+
                 User.objects.create(
                     username=username,
                     email=email,
@@ -137,66 +195,59 @@ def dash(req):
                     password=userform.password,
                 )
 
-                # authenticate and  log the user in
-                user = authenticate(username=username, password=password)
-                if user is not None:
-                    login(req, user)
-                else:
-                    form.add_error("UserName", "invalid")
-
-                # drop a success message
-                messages.success(req, "You have successfully registered!")
-                # render back the page
-                return render(req, "dashboard.html")
-
-            else:
-                fname = req.POST["FirstName"]
-                lname = req.POST["FirstName"]
-                username = req.POST["UserName"]
-                email = req.POST["Email"]
-                # get the errors
-                errors = form.errors.as_data()
-
-                err_list = []
-
-                for err in errors:
-                    err_list.append(f"{err}: {errors[err][0].message}")
-
-                print(err_list)
-                # pass it to the page
-                return render(
-                    req,
-                    "login.html",
-                    {
-                        "err": err_list,
-                        "fname": fname,
-                        "lname": lname,
-                        "email": email,
-                        "user": username,
-                    },
-                )
-        # if the user is logging in
-        if "login" in req.POST:
-
-            # form = AF(request=req, data=req.POST)
-
-            username = req.POST["username"]
-            password = req.POST["password"]
-
-            # authenticate the user
+            # authenticate and  log the user in
             user = authenticate(username=username, password=password)
-            # if they are authenticated
+            print(f"the user {user}.")
+
             if user is not None:
-                # log them in
-                login(req, user=user)
-                print(username, user)
-                return render(req, "dashboard.html", {"user": username})
-            else:
-                messages.error(req, "Invalid User name or password")
-                print(username, user)
-                return redirect("Login")
+                login(req, user)
 
-        print("The user visited the dashboard")
+            # drop a success message
+            messages.success(req, "You have successfully registered!")
+            # render back the page
+            return render(req, "dashboard.html")
+
+        else:
+            fname = req.POST["FirstName"]
+            lname = req.POST["FirstName"]
+            username = req.POST["UserName"]
+            email = req.POST["Email"]
+            # get the errors
+            errors = form.errors.as_data()
+
+            err_list = []
+
+            for err in errors:
+                err_list.append(f"{err}: {errors[err][0].message}")
+
+            print(err_list)
+            # pass it to the page
+            return render(
+                req,
+                "signup.html",
+                {
+                    "err": err_list,
+                    "f_name": fname,
+                    "l_name": lname,
+                    "email": email,
+                    "user_name": username,
+                },
+            )
+    if req.user.is_authenticated:
+        return redirect("DashBoard")
     else:
+        return render(req, "signup.html")
 
+
+def logout_user(req):
+    # log the user out
+    logout(req)
+    return redirect("Home")
+
+
+def dash(req, user_id=None):
+    if req.user.is_authenticated and req.method == "GET":
         return render(req, "dashboard.html")
+
+    else:
+        return redirect("Login")
