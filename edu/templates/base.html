@@ -63,15 +63,27 @@
             {% else %}
 
             <a class="btn-getstarted" href="{% url 'Login' %}">Login</a>
-            <a class="btn-getstarted" href="{% url 'Reg' %}">Signup</a>
+            <a class="btn-getstarted" href="{% url 'RedirectMe' %}">Signup</a>
             {% endif %}
 
         </div>
     </header>
 
+    {% if messages %}
+    {% for message in messages %}
+    {{message.tag}}
+    <div class="alert alert-success alert-dismissible fade show" style="width: 400px; position: sticky; top: 50px;"
+        role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
     {% block content %}
 
     {% endblock %}
+
 
     <footer id="footer" class="footer position-relative">
 
@@ -128,10 +140,19 @@
                 <div class="col-lg-4 col-md-12 footer-newsletter">
                     <h4>Our Newsletter</h4>
                     <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+                    <!-- for the errors -->
+                    {% for errors in err %}
+
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{errors}}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    {% endfor %}
                     <form action="{% url 'Home' %}" method="post" class="">
                         {% csrf_token %}
                         <div class="newsletter-form">
-                            <input type="email" name="email">
+                            <input type="email" name="Email">
                             <input type="submit" value="Subscribe">
                         </div>
                         <!-- <div class="loading">Loading</div> -->
@@ -177,7 +198,7 @@
 </body>
 
 </html>
-<style>
+<!-- <style>
     .box {
         font-family: Arial, sans-serif;
         background-color: #f2f2f2;
@@ -270,4 +291,4 @@
     .input-group input:focus {
         border: 0.5px solid #4CAF50;
     }
-</style>
+</style> -->

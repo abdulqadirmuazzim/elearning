@@ -3,30 +3,22 @@
 
 {% block content %}
 
-{% if messages %}
 
-{% for message in messages %}
-
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>{{message}}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
-{% endfor %}
-
-{% endif %}
 
 <body>
 
     <div class="cover">
         <!-- information about the user -->
         <div class="user_info">
+            <a href="{% url 'edit_profile' %}">Edit Profile</a>
 
             <h1>welcome {{user}}</h1>
         </div>
-        First Name: {{user.first_name}} <br>
-        Last Name: {{user.last_name}} <br>
-        Email: {{user.email}} <br><br><br>
+        <p>First Name: {{user.first_name}} </p>
+        <p>Last Name: {{user.last_name}}</p>
+        <p>Email: {{user.email}}</p>
+
+        <br><br><br>
 
     </div>
     <!-- courses and activities of the user -->

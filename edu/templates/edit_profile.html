@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit {{user}} </title>
+</head>
+
+{% block content %}
+
+
+
+<body>
+    <div class="signup-box">
+        <form method="post" action="{% url 'edit_profile' %}" enctype="multipart/form-data"
+            class="aos-init aos-animate">
+            {% csrf_token %}
+            <div class="textbox">
+                <input type="text" class="form-control" placeholder="First name" name="FirstName"
+                    value="{{user.first_name}}" required>
+            </div>
+            <div class="textbox">
+                <input type="text" class="form-control" placeholder="last name" name="LastName"
+                    value="{{user.last_name}}" required>
+            </div>
+            <div class="textbox">
+                <input type="text" class="form-control" placeholder="User name" name="UserName" value="{{user}}"
+                    required>
+            </div>
+            <div class="textbox">
+                <input type="email" class="form-control" placeholder="Email" value="{{user.email}}" name="Email"
+                    required>
+            </div>
+
+
+            <div class="image-field" style="width: 35%; margin: 10px 0px;">
+
+                <input type="file" name="passport_photo" accept="image/*" required aria-invalid="true"
+                    id="id_passport_photo">
+            </div>
+
+            <div class="textbox">
+                <input type="text" class="form-control" placeholder="Email" value="{{trainer.bio}}" name="bio" required>
+            </div>
+            <button type="submit" class="btn" name="signup">Change</button>
+        </form>
+    </div>
+
+
+    </form>
+</body>
+{% endblock %}
+
+</html>

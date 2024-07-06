@@ -29,7 +29,7 @@
 
     <!-- SIGN UP -->
     <div class="signup-box">
-        <form method="post" action="{% url 'Reg' %}" class="aos-init aos-animate">
+        <form method="post" action="{% url 'Reg_student' %}" class="aos-init aos-animate">
             {% csrf_token %}
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="First name" name="FirstName" value="{{f_name}}"
