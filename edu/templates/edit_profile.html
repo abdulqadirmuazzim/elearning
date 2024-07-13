@@ -3,20 +3,22 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% block content %}
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile and Courses</title>
+    <link rel="stylesheet" href="styles.css">
     <title>Edit {{user}} </title>
-</head>
-
-{% block content %}
 
 
 
 <body>
+    {% if user.is_staff and not user.is_superuser %}
+
     <div class="signup-box">
-        <form method="post" action="{% url 'edit_profile' %}" enctype="multipart/form-data"
+        <form method="post" action="{% url 'edit_trainer_profile' %}" enctype="multipart/form-data"
             class="aos-init aos-animate">
             {% csrf_token %}
             <div class="textbox">
@@ -44,14 +46,40 @@
             </div>
 
             <div class="textbox">
-                <input type="text" class="form-control" placeholder="Email" value="{{trainer.bio}}" name="bio" required>
+                <input type="text" class="form-control" placeholder="bio" value="{{trainer.bio}}" name="bio" required>
             </div>
             <button type="submit" class="btn" name="signup">Change</button>
         </form>
     </div>
+    {% else %}
 
+    <div class="signup-box">
+        <form method="post" action="{% url 'edit_student_profile' %}" enctype="multipart/form-data"
+            class="aos-init aos-animate">
+            {% csrf_token %}
+            <div class="textbox">
+                <input type="text" class="form-control" placeholder="First name" name="FirstName"
+                    value="{{user.first_name}}" required>
+            </div>
+            <div class="textbox">
+                <input type="text" class="form-control" placeholder="last name" name="LastName"
+                    value="{{user.last_name}}" required>
+            </div>
+            <div class="textbox">
+                <input type="text" class="form-control" placeholder="User name" name="UserName" value="{{user}}"
+                    required>
+            </div>
+            <div class="textbox">
+                <input type="email" class="form-control" placeholder="Email" value="{{user.email}}" name="Email"
+                    required>
+            </div>
 
-    </form>
+            <button type="submit" class="btn" name="signup">Change</button>
+        </form>
+    </div>
+
+    {% endif %}
+
 </body>
 {% endblock %}
 

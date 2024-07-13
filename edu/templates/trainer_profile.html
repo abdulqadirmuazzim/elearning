@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+
+<body>
+
+    <!-- courses and activities of the user -->
+
+    <div class="profile-container">
+        <div class="profile">
+            {{trainer.passport}}
+            <h2>My profile <img src="profile-pic.png" alt="Profile Picture" class="profile-pic"></h2>
+            <p><strong>First Name:</strong> {{user.first_name}}</p>
+            <p><strong>Last Name:</strong> {{user.last_name}}</p>
+            <p><strong>Email:</strong> {{user.email}}</p>
+            <p><strong>Status:</strong> Trainer</p>
+        </div>
+        <div class="courses-train">
+            <h2>My courses</h2>
+            <div class="course-train">
+                <h3>Copywriting</h3>
+                <img src="copywriting.jpg" alt="Copywriting" class="course-image">
+                <p>Students registered: 10</p>
+                <p>👍 20</p>
+                <a href="course-details.html" class="course-button">View course details</a>
+            </div>
+            <div class="course-train">
+                <h3>Web design</h3>
+                <img src="web-design.jpg" alt="Web Design" class="course-image">
+                <p>Students registered: 10</p>
+                <p>👍 20</p>
+                <a href="course-details.html" class="course-button">View course details</a>
+            </div>
+            <a href="all-courses.html" class="see-all-button">See all ➔</a>
+        </div>
+    </div>
+    <hr>
+
+</body>
+
+{% endblock %}

@@ -23,7 +23,7 @@ class Course_display(admin.ModelAdmin):
 
 class StudentDisplay(admin.ModelAdmin):
     model = Student
-    list_display = ["user", "courses"]
+    list_display = ["user"]
 
 
 class TrainerDisplay(admin.ModelAdmin):

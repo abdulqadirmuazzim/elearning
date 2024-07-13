@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from .forms import comment, TrainerForm, subscription, StudentForm, Edit_Trainer
-from .models import Trainer
+from .models import Trainer, Student
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User, Permission
 from django.contrib import messages
@@ -126,7 +126,7 @@ def login_user(req):
             # log them in
             login(req, user=user)
             messages.success(req, "You have logged in successfully")
-            return render(req, "dashboard.html", {"user": username})
+            return redirect("DashBoard")
         else:
             messages.error(req, "Invalid User name or password")
             print(username, user)
@@ -135,6 +135,7 @@ def login_user(req):
             )
 
     if req.user.is_authenticated:
+        # if it's a trainer
         return redirect("DashBoard")
     else:
         return render(req, "login.html")
@@ -145,20 +146,22 @@ def register_trainer(req):
     if req.method == "POST":
         # if the user is signing up
 
-        form = TrainerForm(req.POST, req.FILES)
+        form = TrainerForm(req.POST or None, req.FILES or None)
 
         # check
-        # get the username and password
-        username = req.POST.get("UserName")
-        password = req.POST.get("password1")
-        email = req.POST["Email"]
-        fname = req.POST["FirstName"]
-        lname = req.POST["LastName"]
-        bio = req.POST["bio"]
-        passport = form.cleaned_data.get("passport_photo")
 
         # if form is valid
         if form.is_valid():
+
+            # get the username and password
+            username = req.POST.get("UserName")
+            password = req.POST.get("password1")
+            email = req.POST["Email"]
+            fname = req.POST["FirstName"]
+            lname = req.POST["LastName"]
+            bio = req.POST["bio"]
+            passport = form.cleaned_data.get("passport_photo")
+
             # save
             # check to see if username exists
             is_user = User.objects.filter(username=username).exists()
@@ -244,7 +247,7 @@ def register_trainer(req):
                 # drop a success message
                 messages.success(req, "You have successfully registered!")
                 # render back the page
-                return render(req, "dashboard.html")
+                return render(req, "trainer_profile.html")
 
         else:
             fname = req.POST["FirstName"]
@@ -275,16 +278,17 @@ def register_trainer(req):
     if req.user.is_authenticated:
         return redirect("DashBoard")
     else:
-        form = TrainerForm
-        return render(req, "signup_trainer.html", {"form": form.as_p})
+        # form = TrainerForm()
+        return render(req, "signup_trainer.html")
 
 
 # register student
 def register_student(req):
     if req.method == "POST":
+
         # if the user is signing up
 
-        form = req.POST
+        form = StudentForm(req.POST)
         # check
 
         # if form is valid
@@ -338,13 +342,14 @@ def register_student(req):
             else:
                 # create a new user
 
-                User.objects.create(
+                user = User.objects.create(
                     username=username,
                     email=email,
                     first_name=fname,
                     last_name=lname,
                     password=userform.password,
                 )
+                Student.objects.create(user=user)
 
             # authenticate and  log the user in
             user = authenticate(username=username, password=password)
@@ -356,7 +361,7 @@ def register_student(req):
             # drop a success message
             messages.success(req, "You have successfully registered!")
             # render back the page
-            return render(req, "dashboard.html")
+            return render(req, "student_profile.html")
 
         else:
             fname = req.POST["FirstName"]
@@ -387,7 +392,7 @@ def register_student(req):
     if req.user.is_authenticated:
         return redirect("DashBoard")
     else:
-        return render(req, "redirect.html")
+        return render(req, "signup_stu.html")
 
 
 # logout the user
@@ -399,9 +404,15 @@ def logout_user(req):
 
 # the user dashboard
 def dash(req, user_id=None):
+    # if the user is logged in move on
     if req.user.is_authenticated and req.method == "GET":
-        return render(req, "dashboard.html")
-
+        # if the user is a trainer
+        if req.user.is_staff:
+            return render(req, "trainer_profile.html")
+        # else if the user is a student
+        elif not req.user.is_staff:
+            return render(req, "student_profile.html")
+    # else sent him/her to the login page
     else:
         return redirect("Login")
 
@@ -412,13 +423,14 @@ def redirect_page(req):
 
 
 # Page for editing profile
-def edit_profile(req):
+def edit_trainer_profile(req):
     current_user = User.objects.get(id=req.user.id)
     trainers = Trainer.objects.get(user=current_user)
+    # student = Student.objects.get(user=current_user)
+
     if req.method == "POST":
 
         form = Edit_Trainer(req.POST, req.FILES)
-
         # print(form)
         if form.is_valid():
 
@@ -469,3 +481,49 @@ def edit_profile(req):
         #     return redirect("edit_profile")
 
     return render(req, "edit_profile.html", {"trainer": trainers})
+
+
+def edit_student_profile(req):
+    current_user = User.objects.get(id=req.user.id)
+    # student = Student.objects.get(user=current_user)
+
+    if req.method == "POST":
+
+        username = req.POST.get("UserName")
+        email = req.POST["Email"]
+        fname = req.POST["FirstName"]
+        lname = req.POST["LastName"]
+
+        # save the info
+        current_user.username = username
+        current_user.email = email
+        current_user.first_name = fname
+        current_user.last_name = lname
+
+        # Let's make sure the username and email dont exist
+        # check to see if username exists
+        is_user = User.objects.filter(username=username).exists()
+
+        # check to see if email exists
+        is_email = User.objects.filter(email=email).exists()
+
+        if is_user and req.user.username != username:
+            # if username exists and it's not the current username
+            messages.error(req, "This username is taken")
+            return redirect("edit_profile")
+
+        elif is_email and req.user.email != email:
+            # if email exists and not the current email
+            messages.error(req, "This email is in use")
+            return redirect("edit_profile")
+        else:
+            # save
+            # form.save()
+            current_user.save()
+
+        # drop a success message
+        messages.success(req, "You have successfully updated your profile!")
+        # redirect to the dashboard
+        return redirect("DashBoard")
+
+    return render(req, "edit_profile.html")

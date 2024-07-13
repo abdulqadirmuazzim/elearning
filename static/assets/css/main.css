@@ -2003,3 +2003,187 @@ section,
 .input-group input:focus {
   border: 0.5px solid #4CAF50;
 }
+
+/* Dash board styles */
+
+.profile-container {
+  display: flex;
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile {
+  flex: 1;
+  margin-right: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+
+.profile h2 {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.courses-train {
+  flex: 2;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+
+.courses-train h2 {
+  margin-bottom: 20px;
+}
+
+.course-train {
+  background-color: #add8e6;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.course-train h3 {
+  margin-top: 0;
+}
+
+.course-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.course-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.see-all-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #add8e6;
+  color: #000;
+  text-decoration: none;
+  border-radius: 20px;
+  text-align: center;
+}
+
+/* Student profile */
+
+.container-stu {
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  width: 25%;
+  background-color: #e0e0e0;
+  padding: 20px;
+}
+
+.profile-info p {
+  margin: 10px 0;
+}
+
+.edit-profile-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #888;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.main-content {
+  width: 75%;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.main-content header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e1e6e7;
+  padding: 20px;
+}
+
+.main-content header h1 {
+  margin: 0;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.courses-stu,
+.achievements {
+  margin-top: 20px;
+}
+
+.courses-stu h2,
+.achievements h2 {
+  margin-top: 0;
+}
+
+.course-list {
+  display: flex;
+}
+
+.course-stu {
+  width: 48%;
+  margin-right: 4%;
+  background-color: #f5f5f5;
+  padding: 10px;
+  display: flex;
+}
+
+.course:last-child {
+  margin-right: 0;
+}
+
+.course-image {
+  width: 40%;
+  height: auto;
+}
+
+.course-details {
+  padding-left: 10px;
+}
+
+.course-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.achievement-list {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.achievement-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}

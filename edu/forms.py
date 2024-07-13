@@ -27,17 +27,19 @@ class TrainerForm(UserCreationForm):
             "password2",
         ]
 
-        def save(self, commit=True):
-            user = super().save(commit=False)
-            user.email = self.cleaned_data["email"]
-            if not commit:
-                user.save()
-                Trainer.objects.create(
-                    user=user,
-                    bio=self.cleaned_data["bio"],
-                    passport_photo=self.cleaned_data["passport_photo"],
-                )
-            return user
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if not commit:
+            user.save()
+            Trainer.objects.create(
+                user=user,
+                bio=self.cleaned_data["bio"],
+                passport_photo=self.cleaned_data["passport_photo"],
+            )
+        return user
+
+    def save_form(self):
+        pass
 
 
 # trainer reg form
@@ -61,7 +63,6 @@ class StudentForm(UserCreationForm):
 
         def save(self, commit=True):
             user = super().save(commit=False)
-            user.email = self.cleaned_data["email"]
             if not commit:
                 user.save()
                 Student.objects.create(user=user)

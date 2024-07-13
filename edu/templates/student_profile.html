@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{{ block.super }}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile and Courses</title>
+</head>
+
+<body>
+    <div class="container-stu">
+        <div class="sidebar">
+            <div class="profile-info">
+                <p><strong>First Name:</strong> {{user.first_name}}</p>
+                <p><strong>Last Name:</strong> {{user.last_name}}</p>
+                <p><strong>Email:</strong> {{user.email}}@gmail.com</p>
+                <p><strong>Status:</strong> Student</p>
+                <a href="{% url 'edit_student_profile' %}"><button class="edit-profile-button">Edit profile
+                        🖋️</button></a>
+            </div>
+        </div>
+        <div class="main-content">
+            <header>
+                <h1>welcome {{user}} </h1>
+                <img src="profile-pic.png" alt="Profile Picture" class="profile-pic">
+            </header>
+            <section class="courses-stu">
+                <h2>Courses registered: 2</h2>
+                <div class="course-list">
+                    <div class="course-stu">
+                        <img src="copywriting.jpg" alt="Copywriting" class="course-image">
+                        <div class="course-details">
+                            <h3>Copywriting</h3>
+                            <p>Students registered: 10</p>
+                            <p>👍 20</p>
+                            <a href="course-details.html" class="course-button">View course details</a>
+                        </div>
+                    </div>
+                    <div class="course-stu">
+                        <img src="web-design.jpg" alt="Web Design" class="course-image">
+                        <div class="course-details">
+                            <h3>Web design</h3>
+                            <p>Students registered: 10</p>
+                            <p>👍 20</p>
+                            <a href="course-details.html" class="course-button">View course details</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="achievements">
+                <h2>Achievements</h2>
+                <div class="achievement-list">
+                    <img src="achievement1.png" alt="Achievement 1" class="achievement-image">
+                    <img src="achievement2.png" alt="Achievement 2" class="achievement-image">
+                    <img src="achievement3.png" alt="Achievement 3" class="achievement-image">
+                    <img src="achievement4.png" alt="Achievement 4" class="achievement-image">
+                    <img src="achievement5.png" alt="Achievement 5" class="achievement-image">
+                    <img src="achievement6.png" alt="Achievement 6" class="achievement-image">
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+{% endblock %}
