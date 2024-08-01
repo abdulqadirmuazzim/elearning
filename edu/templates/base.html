@@ -41,7 +41,8 @@
                 <!-- <img src="assets/img/logo.png" alt=""> -->
                 <h1 class="sitename">Learn</h1>
             </a>
-
+            {% block nav %}
+            
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="{% url 'Home' %}" id="home">Home</a></li>
@@ -55,6 +56,8 @@
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
+            
+            {% endblock %}
 
             {% if user.is_authenticated %}
             <a class="btn-getstarted" href="{% url 'DashBoard' %}">Profile</a>
@@ -113,14 +116,14 @@
                     <ul>
                         <li><a href="{% url 'Home' %}">Home</a></li>
                         <li><a href="{% url 'About' %}">About us</a></li>
-                        <li><a href="{% url 'Courses' %}">Services</a></li>
+                        <li><a href="{% url 'Courses' %}">Courses</a></li>
                         <!-- <li><a href="#">Terms of service</a></li>
                         <li><a href="#">Privacy policy</a></li> -->
                     </ul>
                 </div>
 
                 <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Our Services</h4>
+                    <h4>Our Courses</h4>
                     <ul>
                         <li><a href="{% url 'Course_detail' %}">Copywriting</a></li>
                         <li><a href="{% url 'Course_detail' %}">Content Creation</a></li>
@@ -199,97 +202,3 @@
 </body>
 
 </html>
-<!-- <style>
-    .box {
-        font-family: Arial, sans-serif;
-        background-color: #f2f2f2;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 70vh;
-        margin: 0;
-    }
-
-    .login-box {
-        background-color: #fff;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        box-shadow: 0 0 10px #0000001a;
-        width: 500px;
-        text-align: center;
-    }
-
-    .textbox {
-        margin-bottom: 15px;
-    }
-
-    .textbox input {
-        width: 100%;
-        padding: 10px;
-        margin: 5px 0;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-    }
-
-    .btn {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        width: 100%;
-        font-size: 16px;
-    }
-
-    .btn:hover {
-        background-color: #45a049;
-    }
-
-    .signup-text {
-        margin-top: 15px;
-        font-size: 14px;
-    }
-
-    .signup-text a {
-        color: #2196F3;
-        text-decoration: none;
-    }
-
-    .signup-text a:hover {
-        text-decoration: underline;
-    }
-
-    /* ---SIGN UP BOX--- */
-
-    .signup-box {
-        background-color: #fff;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 800px;
-        text-align: center;
-    }
-
-    .input-group {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
-    }
-
-    .input-group input {
-        width: 48%;
-        padding: 10px;
-        margin: 5px 10px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-    }
-
-    .input-group input:focus {
-        border: 0.5px solid #4CAF50;
-    }
-</style> -->

@@ -3,41 +3,133 @@
 
 {% block content %}
 
-
-
 <body>
-
+    
+    {% block nav %}
+    
+    
+    {% endblock  %}
     <!-- courses and activities of the user -->
+    
+    <!-- Button trigger modal -->
+    
 
     <div class="profile-container">
         <div class="profile">
             {{trainer.passport}}
-            <h2>My profile <img src="profile-pic.png" alt="Profile Picture" class="profile-pic"></h2>
+            <h2>My profile
+            <button type="button" class="btn-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <!-- Launch static backdrop modal -->
+                <img src="{{profile_pic}}" alt="Profile Picture" class="profile-pic" style="cursor: pointer;" onclick="pictureForm()">
+              </button>
+            </h2>
+
+            <!-- Button trigger modal -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+          <div class="modal-header">
+              
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Edit photo</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <!-- <div class="edit-picture"> -->
+                
+                <form action="" method="post">
+        
+                    <div class="image-field">
+        
+                        <img src="{{profile_pic}}" alt="Profile Picture">
+        
+                        <input type="file" name="passport_photo" accept="image/*" value="{{trainer.passport_photo}}" required
+                            aria-invalid="true" id="id_passport_photo">
+                    </div>
+                </form>
+            <!-- </div> -->
+                </div>
+
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
             <p><strong>First Name:</strong> {{user.first_name}}</p>
             <p><strong>Last Name:</strong> {{user.last_name}}</p>
             <p><strong>Email:</strong> {{user.email}}</p>
             <p><strong>Status:</strong> Trainer</p>
+            <a href="{% url 'edit_trainer_profile' %}"><button class="edit-profile-button">Edit <i
+                        class="bi bi-pencil"></i></button></a>
         </div>
+        <div class="courses">
+
+        
+        <h2>My courses</h2>
         <div class="courses-train">
-            <h2>My courses</h2>
-            <div class="course-train">
-                <h3>Copywriting</h3>
-                <img src="copywriting.jpg" alt="Copywriting" class="course-image">
-                <p>Students registered: 10</p>
-                <p>👍 20</p>
+            {% for course in courses %}
+            
+            <!-- <div class="course-train">
+                <img src="{{course.cover_photo.url}}" alt="Copywriting" class="course-image">
+                <h3>{{course.course_name}}</h3>
+                
+                <i class="bi bi-person"></i> 10
+                <i class="bi bi-hand-thumbs-up"></i> 20
                 <a href="course-details.html" class="course-button">View course details</a>
+            </div> -->
+
+            <div class="course-stu">
+
+                    <img src="{{course.cover_photo.url}}" alt="Copywriting" class="course-image">
+
+                <div class="course-details">
+                    <p>
+                        <a href="{% url 'Course_detail' %}">
+                            <h3>{{course.course_name}}</h3>
+                    </p>
+
+                    <p class="trainer-name">
+                        <a href="{% url 'Course_detail' %}">
+                            <h3>{{course.trainer}}</h3>
+                    </p>
+                    
+                    </a>
+                    <i class="bi bi-person"></i> 10
+                    <i class="bi bi-hand-thumbs-up"></i> 20
+                    <br>
+                </div>
             </div>
-            <div class="course-train">
+            {% endfor %}
+
+            <!-- <div class="course-train">
                 <h3>Web design</h3>
                 <img src="web-design.jpg" alt="Web Design" class="course-image">
                 <p>Students registered: 10</p>
                 <p>👍 20</p>
                 <a href="course-details.html" class="course-button">View course details</a>
-            </div>
-            <a href="all-courses.html" class="see-all-button">See all ➔</a>
+            </div> -->
         </div>
+        
+        <a href="{% url 'Courses' %}" class="see-all-button">See all ➔</a>
+    </div>
+
     </div>
     <hr>
+    <script>
+        let picture = document.querySelector(".profile-pic")
+        function pictureForm(){
+            console.log(picture)
+            myModal.handleUpdate()
+        }
+       
+    </script>
 
 </body>
 

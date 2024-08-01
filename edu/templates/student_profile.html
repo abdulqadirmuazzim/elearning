@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {{ block.super }}
 
 {% block content %}
@@ -16,40 +16,84 @@
 
 <body>
     <div class="container-stu">
+
+        <div class="offcanva">
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i
+                    class="bi bi-chevron-double-right"></i></button>
+
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+                aria-labelledby="offcanvasWithBothOptionsLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Profile info</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+
+                    <div class="sidebar-offcanva">
+                        <div class="profile-info">
+                            <p><strong>First Name:</strong> {{user.first_name}}</p>
+                            <p><strong>Last Name:</strong> {{user.last_name}}</p>
+                            <p><strong>Email:</strong> {{user.email}}@gmail.com</p>
+                            <p><strong>Status:</strong> Student</p>
+                            <a href="{% url 'edit_student_profile' %}"><button class="edit-profile-button">Edit <i
+                                        class="bi bi-pencil"></i></button></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <div class="sidebar">
             <div class="profile-info">
                 <p><strong>First Name:</strong> {{user.first_name}}</p>
                 <p><strong>Last Name:</strong> {{user.last_name}}</p>
                 <p><strong>Email:</strong> {{user.email}}@gmail.com</p>
                 <p><strong>Status:</strong> Student</p>
-                <a href="{% url 'edit_student_profile' %}"><button class="edit-profile-button">Edit profile
-                        🖋️</button></a>
+                <a href="{% url 'edit_student_profile' %}"><button class="edit-profile-button">Edit <i
+                            class="bi bi-pencil"></i></button></a>
             </div>
         </div>
         <div class="main-content">
             <header>
                 <h1>welcome {{user}} </h1>
-                <img src="profile-pic.png" alt="Profile Picture" class="profile-pic">
+                <a href="{% url 'Home' %}">
+                   <img src="{% static 'assets/img/mylogo.png' %}" alt="Profile Picture" class="profile-pic"> 
+                </a>
+                
             </header>
             <section class="courses-stu">
                 <h2>Courses registered: 2</h2>
                 <div class="course-list">
                     <div class="course-stu">
-                        <img src="copywriting.jpg" alt="Copywriting" class="course-image">
+                        <a href="{% url 'Course_detail' %}">
+                            <img src="{% static 'assets/img/course-3.jpg' %}" alt="Copywriting" class="course-image">
+                        </a>
                         <div class="course-details">
-                            <h3>Copywriting</h3>
-                            <p>Students registered: 10</p>
-                            <p>👍 20</p>
-                            <a href="course-details.html" class="course-button">View course details</a>
+                            <p>
+                                <a href="{% url 'Course_detail' %}">
+                                    <h3>Copywriting</h3>
+                            </p>
+                            </a>
+                            <i class="bi bi-person"></i> 10
+                            <i class="bi bi-hand-thumbs-up"></i> 20
+                            <br>
                         </div>
                     </div>
                     <div class="course-stu">
-                        <img src="web-design.jpg" alt="Web Design" class="course-image">
+                        <a href="{% url 'Course_detail' %}">
+                            <img src="{% static 'assets/img/course-1.jpg' %}" alt="Web Design" class="course-image">
+                        </a>
                         <div class="course-details">
-                            <h3>Web design</h3>
-                            <p>Students registered: 10</p>
-                            <p>👍 20</p>
-                            <a href="course-details.html" class="course-button">View course details</a>
+                            <p>
+                                <a href="{% url 'Course_detail' %}">
+                                    <h3>Web design</h3>
+                                </a>
+                            </p>
+                            <i class="bi bi-person"></i> 10
+                            <i class="bi bi-hand-thumbs-up"></i> 20
+                            <br>
                         </div>
                     </div>
                 </div>

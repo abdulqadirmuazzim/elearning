@@ -29,6 +29,8 @@
 <!-- <div class="box"> -->
 
 <!-- SIGN UP -->
+<div class="signup-container">
+
 <div class="signup-box">
     <form method="post" action="{% url 'Reg_trainer' %}" enctype="multipart/form-data" class="aos-init aos-animate">
         {% csrf_token %}
@@ -64,6 +66,7 @@
         <button type="submit" class="btn" name="signup">Sign up</button>
         <p class="signup-text" onclick="login()">Have an account?<br><a href="{% url 'Login' %}">login!</a></p>
     </form>
+</div>
 </div>
 
 <!-- </div> -->

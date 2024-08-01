@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from .forms import comment, TrainerForm, subscription, StudentForm, Edit_Trainer
-from .models import Trainer, Student
+from .models import Trainer, Student, Course
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User, Permission
 from django.contrib import messages
@@ -113,9 +113,11 @@ def login_user(req):
         password = req.POST["password"]
 
         if "@" in username:
-            username = User.objects.get(email=username).username
+            emailname = User.objects.filter(email=username).first()
+            print(emailname)
+            # emailname.get(email=emailname).username
 
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=emailname, password=password)
         else:
             user = authenticate(username=username, password=password)
 
@@ -146,7 +148,7 @@ def register_trainer(req):
     if req.method == "POST":
         # if the user is signing up
 
-        form = TrainerForm(req.POST or None, req.FILES or None)
+        form = TrainerForm(req.POST, req.FILES)
 
         # check
 
@@ -404,11 +406,23 @@ def logout_user(req):
 
 # the user dashboard
 def dash(req, user_id=None):
+
     # if the user is logged in move on
     if req.user.is_authenticated and req.method == "GET":
+        courses = Course.objects.all()
+        print(courses)
+
         # if the user is a trainer
-        if req.user.is_staff:
-            return render(req, "trainer_profile.html")
+        if req.user.is_staff and not req.user.is_superuser:
+
+            profile_pic = Trainer.objects.get(user=req.user).passport_photo
+
+            return render(
+                req,
+                "trainer_profile.html",
+                {"profile_pic": profile_pic.url, "courses": courses},
+            )
+
         # else if the user is a student
         elif not req.user.is_staff:
             return render(req, "student_profile.html")
@@ -422,10 +436,12 @@ def redirect_page(req):
     return render(req, "redirect.html")
 
 
+# ----- EDIT PASSPORT ------
+# ----- MAKE A FORM FOR IT -----
 # Page for editing profile
 def edit_trainer_profile(req):
-    current_user = User.objects.get(id=req.user.id)
-    trainers = Trainer.objects.get(user=current_user)
+    current_user = get_object_or_404(User, id=req.user.id)
+    trainers = get_object_or_404(Trainer, user=current_user)
     # student = Student.objects.get(user=current_user)
 
     if req.method == "POST":
@@ -527,3 +543,8 @@ def edit_student_profile(req):
         return redirect("DashBoard")
 
     return render(req, "edit_profile.html")
+
+
+# 404 Page
+def not_found(req, exception):
+    return render(req, "404.html", status=404)
