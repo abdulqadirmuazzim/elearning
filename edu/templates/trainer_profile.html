@@ -40,15 +40,16 @@
                 <div class="container-fluid">
                     <!-- <div class="edit-picture"> -->
                 
-                <form action="" method="post">
-        
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="image-field">
         
                         <img src="{{profile_pic}}" alt="Profile Picture">
         
-                        <input type="file" name="passport_photo" accept="image/*" value="{{trainer.passport_photo}}" required
+                        <input type="file" name="passport_photo" accept="image/*" value="select file" required
                             aria-invalid="true" id="id_passport_photo">
                     </div>
+                    <button type="submit" class="btn">change</button>
                 </form>
             <!-- </div> -->
                 </div>
@@ -69,13 +70,9 @@
             <a href="{% url 'edit_trainer_profile' %}"><button class="edit-profile-button">Edit <i
                         class="bi bi-pencil"></i></button></a>
         </div>
-        <div class="courses">
 
-        
+        <div class="courses">      
         <h2>My courses</h2>
-        <div class="courses-train">
-            {% for course in courses %}
-            
             <!-- <div class="course-train">
                 <img src="{{course.cover_photo.url}}" alt="Copywriting" class="course-image">
                 <h3>{{course.course_name}}</h3>
@@ -85,7 +82,7 @@
                 <a href="course-details.html" class="course-button">View course details</a>
             </div> -->
 
-            <div class="course-stu">
+            <!-- <div class="course">
 
                     <img src="{{course.cover_photo.url}}" alt="Copywriting" class="course-image">
 
@@ -105,8 +102,40 @@
                     <i class="bi bi-hand-thumbs-up"></i> 20
                     <br>
                 </div>
-            </div>
-            {% endfor %}
+            </div> -->
+            
+        <div class="courses-train">
+
+            {% for course in courses %}
+            <!-- Using the template's html -->
+            <div class="course">
+                <img src="{{course.cover_photo.url}}" class="course-image" alt="...">
+                <div class="course-content">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="category">{{course.course_name}}</p>
+                    <p class="price">{{ course.price }}</p>
+                  </div>
+  
+                  <h3><a href="{% url 'Course_detail' %}">{{course.course_name}}</a></h3>
+                  <p class="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae
+                    dolores dolorem tempore.</p>
+                  <div class="trainer d-flex justify-content-between align-items-center">
+                    <div class="trainer-profile d-flex align-items-center">
+                        <img src="{{course.trainer.passport_photo.url}}" class="img-fluid" alt="">
+                          
+                        <a href="" class="trainer-link">{{course.trainer}}</a>
+                    </div>
+                    <div class="trainer-rank d-flex align-items-center">
+                      <i class="bi bi-person user-icon"></i>&nbsp;50
+                      &nbsp;&nbsp;
+                      <i class="bi bi-heart heart-icon"></i>&nbsp;65
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {% endfor %}
+              </div>
 
             <!-- <div class="course-train">
                 <h3>Web design</h3>
@@ -115,9 +144,9 @@
                 <p>👍 20</p>
                 <a href="course-details.html" class="course-button">View course details</a>
             </div> -->
+            <a href="{% url 'Courses' %}" class="see-all-button">See all ➔</a>
         </div>
         
-        <a href="{% url 'Courses' %}" class="see-all-button">See all ➔</a>
     </div>
 
     </div>

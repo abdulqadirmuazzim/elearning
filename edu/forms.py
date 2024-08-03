@@ -76,7 +76,6 @@ class Edit_Trainer(UserChangeForm):
     UserName = forms.CharField(max_length=30, required=True)
     Email = forms.CharField(max_length=255, required=True)
     bio = forms.CharField(max_length=3000, required=True)
-    passport_photo = forms.ImageField(required=True)
 
     class Meta:
         model = User
@@ -86,8 +85,16 @@ class Edit_Trainer(UserChangeForm):
             "UserName",
             "Email",
             "bio",
-            "passport_photo",
         ]
+
+
+class Edit_Trainer_Passport(UserChangeForm):
+    # create User form
+    passport_photo = forms.ImageField(required=True)
+
+    class Meta:
+        model = User
+        fields = ["passport_photo"]
 
 
 # contact form
