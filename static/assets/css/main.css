@@ -2112,6 +2112,13 @@ section,
   text-align: left;
 }
 
+.course-reg{
+  display: inline;
+  font-size: 20px;
+  padding: 5px;
+  border: 1px solid grey;
+}
+
 .main-content {
   width: 75%;
   padding: 20px;
@@ -2288,4 +2295,73 @@ section,
   .sidebar {
     display: none;
   }
+
+  .success, error, .info{
+    width: 100% !important;
+  }
 }
+
+/* TOAST */
+.toast:not(.show) {
+  display: block;
+  position: sticky;
+  top: 66px;
+  z-index: 10;
+}
+
+.success, .info, .error{
+  width: 50%;
+  position: sticky;
+  top: 70px;
+  z-index: 10;
+}
+
+
+.success{
+  color: #055160;
+  background: #cff4fc;
+  border: 1px solid #9eeaf9;
+}
+
+.error{
+  color: #600505;
+  background: #fccfcf;
+  border: 1px solid #f99e9e;
+}
+
+.info{
+  color: #526005;
+  background: #f8fccf;
+  border: 1px solid #eef99e;
+}
+/* Check box form */
+/* .form-input > *{
+  display: flex;
+  align-items: center;
+  width: 100%;
+} */
+.check-box{
+  padding: 10px;
+  display: flex;
+  justify-items: start;
+  max-height: 300px;
+  flex-direction: column;
+  overflow: auto;
+  align-items: flex-start;
+}
+.check-box input{
+  display: inline;
+  margin: 5px;
+}
+.check-box label{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.check-box div{
+  display: flex;
+  height: 50px;
+  width: 100%;
+  border-bottom: 1px solid grey;
+}
+

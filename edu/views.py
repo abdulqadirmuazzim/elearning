@@ -6,6 +6,7 @@ from .forms import (
     StudentForm,
     Edit_Trainer,
     Edit_Trainer_Passport,
+    Course_Reg_form as CRF,
 )
 from .models import Trainer, Student, Course
 from django.contrib.auth import login, logout, authenticate
@@ -439,6 +440,15 @@ def dash(req, user_id=None):
         # Get the list of all courses and their corresponding trainer data
         courses = Course.objects.select_related("trainer")
 
+        # if the user is an Admin
+        if req.user.is_superuser:
+
+            messages.info(
+                req,
+                "You are a super user, Your profile page is not ready, contact the developer",
+            )
+            return redirect("Home")
+
         # if the user is a trainer
         if req.user.is_staff and not req.user.is_superuser:
 
@@ -457,6 +467,9 @@ def dash(req, user_id=None):
         # else if the user is a student
         elif not req.user.is_staff:
 
+            student = Student.objects.get(user=req.user)
+            courses = student.courses.all()
+
             return render(req, "student_profile.html", {"courses": courses})
 
     # else sent him/her to the login page
@@ -464,18 +477,40 @@ def dash(req, user_id=None):
         return redirect("Login")
 
 
+# student course registration page
+def course_reg(req):
+    form = CRF()
+
+    if req.method == "POST":
+        form = CRF(req.POST)
+        student = Student.objects.get(user=req.user)
+
+        if form.is_valid():
+
+            Reg_courses = form.cleaned_data["courses"]
+            student.courses.set(Reg_courses)
+            student.save()
+
+            messages.success(req, "You have successfully registered")
+            return redirect("DashBoard")
+
+        else:
+            messages.error(req, "Something went wrong")
+            return render(req, "course_reg.html", {"form": form})
+
+    return render(req, "course_reg.html", {"form": form})
+
+
 # the page new users go to for signing up as either a student or teacher
 def redirect_page(req):
     return render(req, "redirect.html")
 
 
-# ----- EDIT PASSPORT ------
-# ----- MAKE A FORM FOR IT -----
 # Page for editing profile
 def edit_trainer_profile(req):
+
     current_user = get_object_or_404(User, id=req.user.id)
     trainers = get_object_or_404(Trainer, user=current_user)
-    # student = Student.objects.get(user=current_user)
 
     if req.method == "POST":
 

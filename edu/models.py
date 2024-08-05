@@ -48,7 +48,7 @@ class Course(models.Model):
 # students
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    courses = models.ManyToManyField(Course)
+    courses = models.ManyToManyField(Course, blank=True)
 
 
 # Instructors and students

@@ -64,17 +64,18 @@
                 
             </header>
             <section class="courses">
-                <h2>Courses registered: 2</h2>
+                <h2>Courses registered: 2 <a href="{% url 'course_reg' %}" class="course-reg">Register Course <i class="bi bi-card-list"></i></a></h2>
                 <div class="course-list">
-                    
+                    {% for course in courses %}                   
                     <div class="course">
+                
                         <a href="{% url 'Course_detail' %}">
-                            <img src="{% static 'assets/img/course-3.jpg' %}" alt="Copywriting" class="course-image">
+                            <img src="{{course.cover_photo.url}}" alt="Copywriting" class="course-image">
                         </a>
                         <div class="course-details">
                             <p>
                                 <a href="{% url 'Course_detail' %}">
-                                    <h3>Copywriting</h3>
+                                    <h3>{{course}}</h3>
                             </p>
                             </a>
                             <i class="bi bi-person"></i> 10
@@ -82,8 +83,9 @@
                             <br>
                         </div>
                     </div>
-                    
-                    <div class="course">
+
+                    {% endfor %}
+                    <!-- <div class="course">
                         <a href="{% url 'Course_detail' %}">
                             <img src="{% static 'assets/img/course-1.jpg' %}" alt="Web Design" class="course-image">
                         </a>
@@ -97,7 +99,7 @@
                             <i class="bi bi-hand-thumbs-up"></i> 20
                             <br>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </section>
             <section class="achievements">

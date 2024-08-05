@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contact as con, Subscription as subs, Student, Trainer
+from .models import Contact as con, Subscription as subs, Student, Trainer, Course
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -67,6 +67,21 @@ class StudentForm(UserCreationForm):
                 user.save()
                 Student.objects.create(user=user)
             return user
+
+
+# Student.courses.formfield()
+
+
+class Course_Reg_form(forms.ModelForm):
+
+    courses = forms.ModelMultipleChoiceField(
+        queryset=Course.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check check-box"}),
+    )
+
+    class Meta:
+        model = Student
+        fields = ["courses"]
 
 
 class Edit_Trainer(UserChangeForm):
