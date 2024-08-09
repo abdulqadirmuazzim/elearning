@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Contact, Subscription, Student, Trainer, Course
+from .models import Contact, Subscription
 
 
 # fields that will show in the admin
@@ -16,21 +16,6 @@ class Sub_display(admin.ModelAdmin):
     list_display = ["Email"]
 
 
-class Course_display(admin.ModelAdmin):
-    model = Course
-    list_display = ["course_name", "cover_photo", "trainer", "price"]
-
-
-class StudentDisplay(admin.ModelAdmin):
-    model = Student
-    list_display = ["user"]
-
-
-class TrainerDisplay(admin.ModelAdmin):
-    model = Trainer
-    list_display = ["user"]
-
-
 # User reg
 
 
@@ -40,10 +25,4 @@ class TrainerDisplay(admin.ModelAdmin):
 
 admin.site.register(Contact, Con_display)
 
-admin.site.register(Student, StudentDisplay)
-
-admin.site.register(Trainer, TrainerDisplay)
-
 admin.site.register(Subscription, Sub_display)
-
-admin.site.register(Course, Course_display)

@@ -1903,6 +1903,13 @@ section,
 
 /* ---SIGN UP BOX--- */
 
+.wrapper{
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  height: auto;
+}
+
 .box {
   font-family: Arial, sans-serif;
   background-color: #f2f2f2;
@@ -1924,7 +1931,9 @@ section,
 }
 
 .textbox {
+  display: grid;
   margin-bottom: 15px;
+  justify-items: start;
 }
 
 .textbox input {
@@ -1971,6 +1980,7 @@ section,
   background-color: #fff;
   padding: 20px;
   border: 1px solid #ddd;
+  margin: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 800px;
@@ -2021,6 +2031,7 @@ section,
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  object-fit: cover;
   border: 1px solid #000;
   margin-left: 10px;
 }
@@ -2248,10 +2259,14 @@ section,
   padding: 10px;
   justify-items: center;
 }
+img{
+  object-fit: cover;
+}
 
 .container-fluid form .image-field img{
   width: 70%;
   height: 80%;
+  object-fit: cover;
 }
 .btn-none{
   border: none;

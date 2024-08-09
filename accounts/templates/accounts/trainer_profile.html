@@ -16,7 +16,6 @@
 
     <div class="profile-container">
         <div class="profile">
-            {{trainer.passport}}
             <h2>My profile
             <button type="button" class="btn-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <!-- Launch static backdrop modal -->
@@ -72,7 +71,8 @@
         </div>
 
         <div class="courses">      
-        <h2>My courses</h2>
+        <h2>My courses  <a href="{% url 'course_creation' %}"><i class="bi bi-plus-square"></i></a></h2>
+        
             <!-- <div class="course-train">
                 <img src="{{course.cover_photo.url}}" alt="Copywriting" class="course-image">
                 <h3>{{course.course_name}}</h3>
@@ -137,13 +137,6 @@
               {% endfor %}
               </div>
 
-            <!-- <div class="course-train">
-                <h3>Web design</h3>
-                <img src="web-design.jpg" alt="Web Design" class="course-image">
-                <p>Students registered: 10</p>
-                <p>👍 20</p>
-                <a href="course-details.html" class="course-button">View course details</a>
-            </div> -->
             <a href="{% url 'Courses' %}" class="see-all-button">See all ➔</a>
         </div>
         

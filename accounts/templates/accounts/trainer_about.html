@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile and About Me</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="profile-picture">
+                <img src="../../static/assets/img/trainers/trainer-1.jpg" alt="Aaliyah Igwe">
+            </div>
+            <div class="profile-details">
+                <h1>AALIYAH IGWE</h1>
+                <h2>Software Engineer</h2>
+            </div>
+            <div class="social-media">
+                <i class="bi bi-instagram"></i>
+                <i class="bi bi-twitter-x"></i>
+                <i class="bi bi-facebook"></i>
+                <i class="bi bi-linkedin"></i>
+            </div>
+        </div>
+        <div class="right-section">
+            <h2>About Me</h2>
+            <p>I am a diligent senior software engineer with 10 years of experience in business applications. I am eager to join a tech company that builds out-of-the-box solutions for regional clients. I am skilled in developing plans, managing projects, and user documentation.</p>
+            <div class="buttons">
+                <button class="resume-button">Resume</button>
+                <button class="portfolio-button">Portfolio</button>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    margin: auto;
+    max-width: 1200px;
+}
+
+.left-section {
+    width: 50%;
+    background-color: #ffffff;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.profile-picture img {
+    width: 80%;
+    height: 75%;
+    border-radius: 10px;
+}
+
+.profile-details h1 {
+    margin-top: 20px;
+    font-size: 2em;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.profile-details h2 {
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 10px;
+}
+
+.social-media {
+    margin-top: 20px;
+}
+
+.social-media li {
+    font-size: 50px;
+    margin: 0 10px;
+}
+
+.right-section {
+    width: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.right-section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.right-section p {
+    font-size: 1.2em;
+    text-align: center;
+    margin-bottom: 30px;
+    max-width: 80%;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 300px;
+}
+
+.resume-button, .portfolio-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.resume-button:hover, .portfolio-button:hover {
+    background-color: #555;
+}
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-section, .right-section {
+        width: 100%;
+    }
+
+    .right-section {
+        padding: 20px;
+    }
+}
+</style>
+</html>

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+<!-- Login page -->
+{% load static %}
+
+{% block content %}
+<!-- Messages -->
+
+{% for error in err %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{error}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+
+
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+{% endif %}
+
+<!-- <div class="box"> -->
+
+<!-- SIGN UP -->
+<div class="signup-container">
+
+<div class="signup-box">
+    
+    <form method="post" action="{% url 'course_creation' %}" enctype="multipart/form-data" class="aos-init aos-animate">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Course name" name="course_name" required>
+            <input type="number" class="form-control" placeholder="Price" name="price" required>
+        </div>
+
+        <div class="image-field" style="width: 35%; margin: 10px 0px;">
+
+            <input type="file" name="cover_photo" accept="image/*" required aria-invalid="true"
+                id="id_cover_photo">
+        </div>
+
+        <button type="submit" class="btn" name="signup">Add course</button>
+    </form>
+</div>
+</div>
+
+<!-- </div> -->
+
+
+<style>
+
+</style>
+{% endblock %}
