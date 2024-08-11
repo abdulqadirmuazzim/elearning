@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404 as goo4
 from .forms import comment, subscription
-from accounts.models import Course
+from accounts.models import Course, Trainer
 from django.contrib import messages
 
 # Create your views here.
@@ -52,7 +52,8 @@ def pricing(req):
 
 # trainers
 def trainers(req):
-    return render(req, "trainers.html")
+    trainers = Trainer.objects.all()
+    return render(req, "trainers.html", {'trainers': trainers})
 
 
 # starter-page

@@ -81,10 +81,11 @@
       <div class="container">
 
         <div class="row gy-5">
+          {% for trainer in trainers %}       
 
           <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
             <div class="member-img">
-              <img src="{% static 'assets/img/team/team-1.jpg' %}" class="img-fluid" alt="">
+              <img src="{{trainer.passport_photo.url}}" class="img-fluid" alt="">
               <div class="social">
                 <a href="#"><i class="bi bi-twitter"></i></a>
                 <a href="#"><i class="bi bi-facebook"></i></a>
@@ -93,13 +94,16 @@
               </div>
             </div>
             <div class="member-info text-center">
-              <h4>Walter White</h4>
-              <span class="">Business</span>
-              <p>Aliquam iure quaerat voluptatem praesentium possimus unde laudantium vel dolorum distinctio dire flow
-              </p>
+              <h4>{{trainer.user.first_name}} {{trainer.user.last_name}} </h4>
+              <!-- <span class="">Business</span> -->
+              <p> {{trainer.bio|truncatewords:15}} </p>
             </div>
           </div><!-- End Team Member -->
 
+          {% endfor %}
+
+          {% comment %}
+                      
           <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="200">
             <div class="member-img">
               <img src="{% static 'assets/img/team/team-2.jpg' %}" class="img-fluid" alt="">
@@ -189,6 +193,7 @@
                 cupiditate vel</p>
             </div>
           </div><!-- End Team Member -->
+          {% endcomment %}
           <div class="adding">
             <a class="btn-getstarted" href="{% url 'Home' %}">
               <h4>Become a trainer</h4>
