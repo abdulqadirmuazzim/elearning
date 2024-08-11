@@ -72,7 +72,7 @@
 
         <div class="courses">      
         <h2>My courses  <a href="{% url 'course_creation' %}"><i class="bi bi-plus-square"></i></a></h2>
-        
+        {% comment %}
             <!-- <div class="course-train">
                 <img src="{{course.cover_photo.url}}" alt="Copywriting" class="course-image">
                 <h3>{{course.course_name}}</h3>
@@ -88,12 +88,12 @@
 
                 <div class="course-details">
                     <p>
-                        <a href="{% url 'Course_detail' %}">
+                        <a href="{% url 'Course_detail' course.id %}">
                             <h3>{{course.course_name}}</h3>
                     </p>
 
                     <p class="trainer-name">
-                        <a href="{% url 'Course_detail' %}">
+                        <a href="{% url 'Course_detail' course.id %}">
                             <h3>{{course.trainer}}</h3>
                     </p>
                     
@@ -103,6 +103,7 @@
                     <br>
                 </div>
             </div> -->
+            {% endcomment %}
             
         <div class="courses-train">
 
@@ -116,7 +117,7 @@
                     <p class="price">{{ course.price }}</p>
                   </div>
   
-                  <h3><a href="{% url 'Course_detail' %}">{{course.course_name}}</a></h3>
+                  <h3><a href="{% url 'Course_detail' course.id %}">{{course.course_name}}</a></h3>
                   <p class="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae
                     dolores dolorem tempore.</p>
                   <div class="trainer d-flex justify-content-between align-items-center">

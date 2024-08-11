@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404 as goo4
 from .forms import comment, subscription
 from accounts.models import Course
 from django.contrib import messages
@@ -19,7 +19,8 @@ def home(req):
             messages.error(req, "Could not Subscribe")
             errors = form.errors.values()
             return render(req, "index.html", dict(err=errors))
-    return render(req, "index.html")
+    courses = Course.objects.all()
+    return render(req, "index.html", {"courses": courses})
 
 
 # about
@@ -34,8 +35,9 @@ def courses(req):
 
 
 # course details
-def course_detail(req):
-    return render(req, "course-details.html")
+def course_detail(req, course_id):
+    course = goo4(Course, id=course_id)
+    return render(req, "course-details.html", {"course": course})
 
 
 # events
