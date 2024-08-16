@@ -397,27 +397,16 @@ def course_create(req):
 
 
 # student course registration page
-def course_reg(req):
-    form = CRF()
+def course_reg(req, course_id):
 
-    if req.method == "POST":
-        form = CRF(req.POST)
-        student = Student.objects.get(user=req.user)
+    course = get_object_or_404(Course, id=course_id)
+    student = get_object_or_404(Student, user=req.user)
 
-        if form.is_valid():
+    # Register for the course
+    student.courses.add(course)
+    messages.success(req, "You have successfully registered this course")
 
-            Reg_courses = form.cleaned_data["courses"]
-            student.courses.set(Reg_courses)
-            student.save()
-
-            messages.success(req, "You have successfully registered")
-            return redirect("DashBoard")
-
-        else:
-            messages.error(req, "Something went wrong")
-            return render(req, "accounts/course_reg.html", {"form": form})
-
-    return render(req, "accounts/course_reg.html", {"form": form})
+    return redirect("DashBoard")
 
 
 # the page new users go to for signing up as either a student or teacher

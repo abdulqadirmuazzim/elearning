@@ -11,7 +11,9 @@ urlpatterns = [
     path("dashboard", v.dash, name="DashBoard"),
     path("edit_tra_profile", v.edit_trainer_profile, name="edit_trainer_profile"),
     path("edit_stu_profile", v.edit_student_profile, name="edit_student_profile"),
-    path("student_course_registration", v.course_reg, name="course_reg"),
+    path(
+        "student_course_registration/<int:course_id>", v.course_reg, name="course_reg"
+    ),
     path("course_creation", v.course_create, name="course_creation"),
     path("trainer/<int:trainer_id>", v.about_trainer, name="about_trainer"),
 ]

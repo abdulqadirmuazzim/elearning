@@ -68,6 +68,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 # Custom made context
                 "edu.context.course_links",
+                "edu.context.student_registered_courses",
             ],
         },
     },

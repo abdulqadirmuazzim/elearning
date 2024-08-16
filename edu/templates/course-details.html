@@ -104,11 +104,20 @@
             </div> -->
 
 
+        {% if not user.is_staff %}
             <div class="course-info d-flex justify-content-between align-items-center">
+              {% if course not in RegisteredCourses %}
+                
               <h5>Register</h5>
-              <p><a href="#">Click here</a></p>
+              <p><a href="{% url 'course_reg' course.id %}">Click here</a></p>
+              
+              {% else %}
+              <h5>Register</h5>
+              
+              {% endif %}
             </div>
-
+        {% endif %}
+            
           </div>
         </div>
 

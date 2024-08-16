@@ -1060,6 +1060,11 @@ section,
 /*--------------------------------------------------------------
 # Courses Section
 --------------------------------------------------------------*/
+
+.col-md-6 {
+  margin: 10px 0px;
+}
+
 .courses .course-item {
   border-radius: 5px;
   border: 1px solid rgba(var(--default-color-rgb), 0.1);
