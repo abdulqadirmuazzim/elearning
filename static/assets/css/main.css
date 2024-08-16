@@ -1467,6 +1467,8 @@ section,
   margin: 0 80px;
   border-radius: 50%;
   overflow: hidden;
+  width: 250px;
+  height: 250px;
   position: relative;
 }
 
@@ -2011,9 +2013,15 @@ section,
 
 .profile-container {
   display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+#info-button{
+  width: 300px;
+  height: 50px;
 }
 
 .profile {
@@ -2070,7 +2078,7 @@ section,
 
 .course-image {
   width: 100%;
-  height: auto;
+  height: 50%;
   margin-bottom: 10px;
 }
 
@@ -2115,10 +2123,10 @@ section,
 
 .edit-profile-button {
   display: block;
-  width: 100%;
+  width: 100px;
   padding: 10px;
-  background-color: #888;
-  color: #fff;
+  background-color: #dedbdb;
+  color: #302d2d;
   border: none;
   border-radius: 5px;
   text-align: left;

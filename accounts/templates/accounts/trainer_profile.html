@@ -15,60 +15,69 @@
     
 
     <div class="profile-container">
-        <div class="profile">
-            <h2>My profile
-            <button type="button" class="btn-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <!-- Launch static backdrop modal -->
-                <img src="{{profile_pic}}" alt="Profile Picture" class="profile-pic" style="cursor: pointer;" onclick="pictureForm()">
-              </button>
-            </h2>
 
-            <!-- Button trigger modal -->
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
+      <p class="d-inline-flex gap-1">
+        <button class="btn btn-primary" type="button" id="info-button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          View profile info
+        </button>
+      </p>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
 
-          <div class="modal-header">
-              
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Edit photo</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <!-- <div class="edit-picture"> -->
+          <!-- Profile Info here -->
+          <div class="profile">
+              <h2>My profile
+              <button type="button" class="btn-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <!-- Launch static backdrop modal -->
+                  <img src="{{profile_pic}}" alt="Profile Picture" class="profile-pic" style="cursor: pointer;" onclick="pictureForm()">
+                </button>
+              </h2>
+    
+              <!-- Button trigger modal -->
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+    
+            <div class="modal-header">
                 
-                <form action="" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="image-field">
-        
-                        <img src="{{profile_pic}}" alt="Profile Picture">
-        
-                        <input type="file" name="passport_photo" accept="image/*" value="select file" required
-                            aria-invalid="true" id="id_passport_photo">
-                    </div>
-                    <button type="submit" class="btn">change</button>
-                </form>
-            <!-- </div> -->
-                </div>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit photo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <div class="container-fluid">
+                  
+                  <form action="" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="image-field">
+          
+                          <img src="{{profile_pic}}" alt="Profile Picture">
+          
+                          <input type="file" name="passport_photo" accept="image/*" value="select file" required
+                              aria-invalid="true" id="id_passport_photo">
+                      </div>
+                      <button type="submit" class="btn">change</button>
+                  </form>
 
+                  </div>
+    
+          </div>
         </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div> -->
       </div>
     </div>
-  </div>
-
-            <p><strong>First Name:</strong> {{user.first_name}}</p>
-            <p><strong>Last Name:</strong> {{user.last_name}}</p>
-            <p><strong>Email:</strong> {{user.email}}</p>
-            <p><strong>Status:</strong> Trainer</p>
-            <a href="{% url 'edit_trainer_profile' %}"><button class="edit-profile-button">Edit <i
-                        class="bi bi-pencil"></i></button></a>
+    
+              <p><strong>First Name:</strong> {{user.first_name}}</p>
+              <p><strong>Last Name:</strong> {{user.last_name}}</p>
+              <p><strong>Email:</strong> {{user.email}}</p>
+              <p><strong>Status:</strong> Trainer</p>
+              <a href="{% url 'edit_trainer_profile' %}"><button class="edit-profile-button">Edit <i
+                          class="bi bi-pencil"></i></button></a>
+          </div>
+          <!-- End of profile info -->
         </div>
+      </div>
+
 
         <div class="courses">      
         <h2>My courses  <a href="{% url 'course_creation' %}"><i class="bi bi-plus-square"></i></a></h2>
@@ -124,7 +133,7 @@
                     <div class="trainer-profile d-flex align-items-center">
                         <img src="{{course.trainer.passport_photo.url}}" class="img-fluid" alt="">
                           
-                        <a href="" class="trainer-link">{{course.trainer}}</a>
+                        <a href="{% url 'about_trainer' course.trainer.user.id %}" class="trainer-link">{{course.trainer}}</a>
                     </div>
                     <div class="trainer-rank d-flex align-items-center">
                       <i class="bi bi-person user-icon"></i>&nbsp;50

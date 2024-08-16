@@ -83,14 +83,14 @@
             <h3>Et enim incidunt fuga tempora</h3>
             <p>
             <!-- 103 words -->
-             {{course.trainer.bio}}
+             {{course.description|truncatewords:103}}
             </p>
           </div>
           <div class="col-lg-4">
 
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Trainer</h5>
-              <p><a href="#">{{course.trainer.user.first_name}} {{course.trainer.user.last_name}} </a></p>
+              <p><a href="{% url 'about_trainer' course.trainer.user.id %}">{{course.trainer.user.first_name}} {{course.trainer.user.last_name}} </a></p>
             </div>
 
             <div class="course-info d-flex justify-content-between align-items-center">
@@ -98,15 +98,11 @@
               <p>${{course.price}}</p>
             </div>
 
-            <div class="course-info d-flex justify-content-between align-items-center">
+            <!-- <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Available Seats </h5>
               <p>30</p>
-            </div>
+            </div> -->
 
-            <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Schedule</h5>
-              <p>5.00 pm - 7.00 pm</p>
-            </div>
 
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Register</h5>

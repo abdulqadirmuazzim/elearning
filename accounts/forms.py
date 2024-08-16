@@ -105,4 +105,4 @@ class Edit_Trainer_Passport(UserChangeForm):
 class Course_creation(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ["course_name", "cover_photo", "price"]
+        fields = ["course_name", "cover_photo", "price", "description"]

@@ -13,4 +13,5 @@ urlpatterns = [
     path("edit_stu_profile", v.edit_student_profile, name="edit_student_profile"),
     path("student_course_registration", v.course_reg, name="course_reg"),
     path("course_creation", v.course_create, name="course_creation"),
+    path("trainer/<int:trainer_id>", v.about_trainer, name="about_trainer"),
 ]

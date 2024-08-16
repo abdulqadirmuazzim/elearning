@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,13 +9,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    {% block content %}
+      
+    
     <div class="container">
         <div class="left-section">
             <div class="profile-picture">
-                <img src="../../static/assets/img/trainers/trainer-1.jpg" alt="Aaliyah Igwe">
+                <img src="{{trainer.passport_photo.url}}" alt="Aaliyah Igwe">
             </div>
             <div class="profile-details">
-                <h1>AALIYAH IGWE</h1>
+                <h1>{{trainer.user.first_name|upper}} {{trainer.user.last_name|upper}} </h1>
                 <h2>Software Engineer</h2>
             </div>
             <div class="social-media">
@@ -26,23 +30,25 @@
         </div>
         <div class="right-section">
             <h2>About Me</h2>
-            <p>I am a diligent senior software engineer with 10 years of experience in business applications. I am eager to join a tech company that builds out-of-the-box solutions for regional clients. I am skilled in developing plans, managing projects, and user documentation.</p>
+            <!-- <p>I am a diligent senior software engineer with 10 years of experience in business applications. I am eager to join a tech company that builds out-of-the-box solutions for regional clients. I am skilled in developing plans, managing projects, and user documentation.</p> -->
+             <p> {{trainer.bio}} </p>
             <div class="buttons">
                 <button class="resume-button">Resume</button>
                 <button class="portfolio-button">Portfolio</button>
             </div>
         </div>
     </div>
+    
 </body>
 <style>
-    body {
+    /* body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
     height: 100vh;
     background-color: #f0f0f0;
-}
+} */
 
 .container {
     display: flex;
@@ -142,4 +148,5 @@
     }
 }
 </style>
+{% endblock  %}
 </html>

@@ -82,7 +82,7 @@
                             <div class="trainer-profile d-flex align-items-center">
                                 <img src="{{course.trainer.passport_photo.url}}" class="img-fluid" alt="">
                                   
-                                <a href="" class="trainer-link">{{course.trainer}}</a>
+                                <a href="{% url 'about_trainer' course.trainer.user.id %}" class="trainer-link">{{course.trainer}}</a>
                             </div>
                             <div class="trainer-rank d-flex align-items-center">
                               <i class="bi bi-person user-icon"></i>&nbsp;50

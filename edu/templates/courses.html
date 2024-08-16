@@ -87,8 +87,6 @@
 
         <div class="row">
           {% for course in Courses %}
-            
-         
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             
@@ -105,7 +103,7 @@
                 <div class="trainer d-flex justify-content-between align-items-center">
                   <div class="trainer-profile d-flex align-items-center">
                     <img src="{{course.trainer.passport_photo.url}}" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">{{course.trainer.user.first_name}}</a>
+                    <a href="{% url 'about_trainer' course.trainer.user.id %}" class="trainer-link">{{course.trainer.user.first_name}}</a>
                   </div>
                   <div class="trainer-rank d-flex align-items-center">
                     <i class="bi bi-person user-icon"></i>&nbsp;50
@@ -189,13 +187,7 @@
 
     <div class="container copyright text-center mt-4">
       <p>© <span>Copyright</span> <strong class="px-1 sitename">Mentor</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
+
     </div>
 
   </footer>

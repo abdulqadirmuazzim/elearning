@@ -528,3 +528,9 @@ def edit_student_profile(req):
         return redirect("DashBoard")
 
     return render(req, "accounts/edit_profile.html")
+
+
+# About trainer
+def about_trainer(req, trainer_id):
+    trainer = get_object_or_404(Trainer, user=trainer_id)
+    return render(req, "accounts/trainer_about.html", {"trainer": trainer})
