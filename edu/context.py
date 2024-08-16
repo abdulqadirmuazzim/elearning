@@ -8,6 +8,9 @@ def course_links(req):
 
 
 def student_registered_courses(req):
-    student = Student.objects.get(user=req.user)
-    all_courses = student.courses.all()
-    return {"RegisteredCourses": all_courses}
+    if req.user.is_authenticated and not req.user.is_staff:
+        student = Student.objects.get(user=req.user)
+        all_courses = student.courses.all()
+        return {"RegisteredCourses": all_courses}
+    else:
+        return {"RegisteredCourses": None}

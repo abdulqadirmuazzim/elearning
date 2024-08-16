@@ -378,7 +378,7 @@ def dash(req, user_id=None):
 
 # course creation page for trainers
 def course_create(req):
-    trainer = get_object_or_404(Trainer, user=req.user)
+    trainer = get_object_or_404(Trainer, id=req.user.id)
     form = CC()
     if req.method == "POST":
         form = CC(req.POST, req.FILES)

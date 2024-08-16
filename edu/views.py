@@ -53,7 +53,7 @@ def pricing(req):
 # trainers
 def trainers(req):
     trainers = Trainer.objects.all()
-    return render(req, "trainers.html", {'trainers': trainers})
+    return render(req, "trainers.html", {"trainers": trainers})
 
 
 # starter-page
