@@ -17,47 +17,39 @@
 <body>
     <div class="container-stu">
 
-        <div class="offcanva">
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i
-                    class="bi bi-chevron-double-right"></i></button>
-
-            <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
-                aria-labelledby="offcanvasWithBothOptionsLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Profile info</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-
-                    <div class="sidebar-offcanva">
-                        <div class="profile-info">
-                            <p><strong>First Name:</strong> {{user.first_name}}</p>
-                            <p><strong>Last Name:</strong> {{user.last_name}}</p>
-                            <p><strong>Email:</strong> {{user.email}}@gmail.com</p>
-                            <p><strong>Status:</strong> Student</p>
-                            <a href="{% url 'edit_student_profile' %}"><button class="edit-profile-button">Edit <i
-                                        class="bi bi-pencil"></i></button></a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="sidebar">
-            <div class="profile-info">
-                <p><strong>First Name:</strong> {{user.first_name}}</p>
-                <p><strong>Last Name:</strong> {{user.last_name}}</p>
-                <p><strong>Email:</strong> {{user.email}}@gmail.com</p>
-                <p><strong>Status:</strong> Student</p>
-                <a href="{% url 'edit_student_profile' %}"><button class="edit-profile-button">Edit <i
-                            class="bi bi-pencil"></i></button></a>
-            </div>
-        </div>
+        
         <div class="main-content">
             <header>
-                <h1>welcome {{user}} </h1>
+
+                <div class="offcanva">
+                    <button class="off-button" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i
+                            class="bi bi-person-fill"></i></button>
+        
+                    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+                        aria-labelledby="offcanvasWithBothOptionsLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Profile info</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+        
+                            <div class="sidebar-offcanva">
+                                <div class="profile-info">
+                                    <p><strong>First Name:</strong> {{user.first_name}}</p>
+                                    <p><strong>Last Name:</strong> {{user.last_name}}</p>
+                                    <p><strong>Email:</strong> {{user.email}}@gmail.com</p>
+                                    <p><strong>Status:</strong> Student</p>
+                                    <a href="{% url 'edit_student_profile' %}"><button class="edit-profile-button">Edit <i
+                                                class="bi bi-pencil"></i></button></a>
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
+                </div>
+
+                <h1>@ {{user}} </h1>
                 <a href="{% url 'Home' %}">
                    <img src="{% static 'assets/img/mylogo.png' %}" alt="Profile Picture" class="profile-pic"> 
                 </a>

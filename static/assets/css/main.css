@@ -2111,13 +2111,13 @@ section,
 /* Student profile */
 
 .container-stu {
-  display: flex;
+  display: grid;
   width: 100%;
 }
 
 .sidebar {
-  width: 25%;
-  background-color: #e0e0e0;
+  width: 100%;
+  background-color: #ffffff;
   padding: 20px;
   transition: 0.3s;
 }
@@ -2145,7 +2145,7 @@ section,
 }
 
 .main-content {
-  width: 75%;
+  width: 100%;
   padding: 20px;
   background-color: #fff;
 }
@@ -2241,7 +2241,22 @@ section,
 }
 
 .offcanva {
-  display: none;
+  display: block;
+  width: 30px;
+  height: 30px;
+}
+
+.off-button, .user-control{
+  background-color: transparent;
+  border-radius: 10px;
+  border: none;
+}
+
+.off-button{
+  font-size: 30px;
+}
+.user-control:hover{
+  color: #059652;
 }
 
 .signup-container{
@@ -2274,6 +2289,12 @@ section,
   justify-items: center;
 }
 img{
+  object-fit: cover;
+}
+
+.img-fluid {
+  width: 100%;
+  height: 50%;
   object-fit: cover;
 }
 
@@ -2315,11 +2336,6 @@ img{
 }
 
 @media (max-width: 880px) {
-  .offcanva {
-    display: block;
-    width: 30px;
-    height: 30px;
-  }
 
   .sidebar {
     display: none;

@@ -116,9 +116,10 @@
                   <a href="{% url 'course_reg' course.id %}">
                     <button class="btn btn-info"> Register</button>
                   </a>
-                  {% else %}
+                  {% elif course not in RegisteredCourses %}
 
                   <p> Registered </p>
+                  {% else %}
 
                 {% endif %}
               </div>

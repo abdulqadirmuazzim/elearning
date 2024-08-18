@@ -378,7 +378,7 @@ def dash(req, user_id=None):
 
 # course creation page for trainers
 def course_create(req):
-    trainer = get_object_or_404(Trainer, id=req.user.id)
+    trainer = get_object_or_404(Trainer, user=req.user)
     form = CC()
     if req.method == "POST":
         form = CC(req.POST, req.FILES)
@@ -394,6 +394,11 @@ def course_create(req):
             messages.error(req, "Unable to create course")
 
     return render(req, "accounts/course_creation.html", {"form": form})
+
+
+# Course editing page
+def course_edit(req):
+    pass
 
 
 # student course registration page
