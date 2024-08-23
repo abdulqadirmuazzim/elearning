@@ -36,8 +36,8 @@
     <form method="post" action="{% url 'course_creation' %}" enctype="multipart/form-data" class="aos-init aos-animate">
         {% csrf_token %}
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Course name" name="course_name" required>
-            <input type="number" class="form-control" placeholder="Price" name="price" required>
+            <input type="text" class="form-control" placeholder="Course name" name="course_name" value="{{course.course_name}}" required>
+            <input type="number" class="form-control" placeholder="Price" name="price" value="{{course.price}}" required>
         </div>
         <div class="textbox">
             <textarea name="description" cols="30" rows="10" style="width: 100%;" ></textarea>
@@ -45,7 +45,7 @@
 
         <div class="image-field" style="width: 35%; margin: 10px 0px;">
 
-            <input type="file" name="cover_photo" accept="image/*" required aria-invalid="true"
+            <input type="file" name="cover_photo" value="{{course.cover_photo}}" accept="image/*" required aria-invalid="true"
                 id="id_cover_photo">
         </div>
 

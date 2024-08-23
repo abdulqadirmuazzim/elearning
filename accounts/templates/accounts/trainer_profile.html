@@ -83,38 +83,7 @@
 
         <div class="courses">      
         <h2>My courses  <a href="{% url 'course_creation' %}"><i class="bi bi-plus-square"></i></a></h2>
-        {% comment %}
-            <!-- <div class="course-train">
-                <img src="{{course.cover_photo.url}}" alt="Copywriting" class="course-image">
-                <h3>{{course.course_name}}</h3>
-                
-                <i class="bi bi-person"></i> 10
-                <i class="bi bi-hand-thumbs-up"></i> 20
-                <a href="course-details.html" class="course-button">View course details</a>
-            </div> -->
 
-            <!-- <div class="course">
-
-                    <img src="{{course.cover_photo.url}}" alt="Copywriting" class="course-image">
-
-                <div class="course-details">
-                    <p>
-                        <a href="{% url 'Course_detail' course.id %}">
-                            <h3>{{course.course_name}}</h3>
-                    </p>
-
-                    <p class="trainer-name">
-                        <a href="{% url 'Course_detail' course.id %}">
-                            <h3>{{course.trainer}}</h3>
-                    </p>
-                    
-                    </a>
-                    <i class="bi bi-person"></i> 10
-                    <i class="bi bi-hand-thumbs-up"></i> 20
-                    <br>
-                </div>
-            </div> -->
-            {% endcomment %}
             
         <div class="courses-train">
 
@@ -136,8 +105,10 @@
                         <img src="{{course.trainer.passport_photo.url}}" class="img-fluid" alt="">
                           
                         <a href="{% url 'about_trainer' course.trainer.user.id %}" class="trainer-link">{{course.trainer}}</a>
-                        <a href=""><button class="user-control"> <i class="bi bi-pen"></i></button></a>
-                        <a href=""><button class="user-control"><i class="bi bi-trash"></i></button></a>
+                        <!-- Edit button -->
+                        <a href="{% url 'edit_course' course.id %}"><button class="user-control"> <i class="bi bi-pen"></i></button></a>
+                        <!-- Delete button -->
+                        <a href="{% url 'delete_course' course.id %}"><button class="user-control"><i class="bi bi-trash"></i></button></a>
                     </div>
                     <div class="trainer-rank d-flex align-items-center">
                       <i class="bi bi-person user-icon"></i>&nbsp;50

@@ -399,24 +399,30 @@ def course_create(req):
 # Course editing page
 def course_edit(req, course_id):
     course = get_object_or_404(Course, id=course_id)
-    if course.trainer == req.user:
-        if req.method == "POST":
-            form = CC(req.POST)
-            form.save()
+    if course.trainer.user == req.user:
+        return render(req, "accounts/course_creation.html", {"course": course})
 
     elif req.user.is_superuser:
-        return messages.info(req, "Go edit in the Admin!")
+        messages.info(req, "Go edit in the Admin!")
+        return redirect("Home")
     else:
-        return messages.error(
+        messages.error(
             req,
             "You are not allowed to delete a course, and you're not suppose to even see this",
         )
-    return render(req, "accounts/edit_course.html")
+        return redirect("DashBoard")
 
 
 # Deleting Course
-def course_edit(req):
-    pass
+def course_delete(req, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    if req.user != course.trainer.user:
+        messages.error(req, "You can't delete this course")
+        return redirect("DashBoard")
+    else:
+        course.delete()
+        messages.info(req, "You have successfully deleted this course")
+        return redirect("DashBoard")
 
 
 # student course registration page
