@@ -2181,6 +2181,7 @@ section,
 .course {
   width: 400px;
   height: auto;
+  position: relative;
   margin-top: 4%;
   margin: 5px;
   background-color: #ffffff;
@@ -2189,6 +2190,20 @@ section,
   flex-direction: column;
 }
 
+.abs{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  background-color: #ffffff84;
+  transition: 0.3s;
+  border-radius: 20%;
+  font-size: 25px;
+  margin: 10px;
+  border: 1px solid #2f2f2f;
+}
 .course:last-child {
   margin-right: 0;
 }
@@ -2226,6 +2241,12 @@ section,
   text-decoration: none;
   border-radius: 5px;
   margin-top: 10px;
+}
+.btn-danger{
+  background: #c30606;
+}
+.btn-secondary{
+  background: #656464;
 }
 
 .achievement-list {
@@ -2294,7 +2315,7 @@ img{
 
 .img-fluid {
   width: 100%;
-  height: 50%;
+  /* height: 50%; */
   object-fit: cover;
 }
 
@@ -2410,3 +2431,18 @@ img{
   border-bottom: 1px solid grey;
 }
 
+
+.image-preview {
+  margin-bottom: 20px;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 10px;
+  display: none;
+}
+
+.image-preview p {
+  color: #777;
+}

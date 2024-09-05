@@ -99,7 +99,7 @@
                 </div>
 
                 <h3><a href="{% url 'Course_detail' course.id %}">{{course.course_name}}</a></h3>
-                <p class="description">{{course.trainer.bio|truncatewords:50 }}</p>
+                <p class="description">{{course.trainer.bio|truncatewords:20 }}</p>
                 <div class="trainer d-flex justify-content-between align-items-center">
                   <div class="trainer-profile d-flex align-items-center">
                     <img src="{{course.trainer.passport_photo.url}}" class="img-fluid" alt="">
@@ -111,17 +111,22 @@
                     &nbsp;&nbsp;
                     <i class="bi bi-heart heart-icon"></i>&nbsp;65
                   </div>
+
                 </div>
-                {% if not user.is_staff and course not in RegisteredCourses %}
-                  <a href="{% url 'course_reg' course.id %}">
-                    <button class="btn btn-info"> Register</button>
-                  </a>
-                  {% elif course not in RegisteredCourses %}
+                
+                <div class="reg d-flex justify-content-between align-items-center">
+                  {% if not user.is_staff and course not in RegisteredCourses %}
+                    <a href="{% url 'course_reg' course.id %}">
+                      <button class="btn btn-info"> Register</button>
+                    </a>
+                    {% elif course not in RegisteredCourses %}
+  
+                    <p> Registered </p>
+                    {% else %}
+  
+                  {% endif %}
+                </div>
 
-                  <p> Registered </p>
-                  {% else %}
-
-                {% endif %}
               </div>
             </div>
           </div>

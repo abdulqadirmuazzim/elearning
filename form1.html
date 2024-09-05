@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload with Preview</title>
+    <style>
+        .preview {
+            margin-top: 20px;
+            max-width: 300px;
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <form id="imageUploadForm">
+        <input type="file" id="imageInput" accept="image/*" />
+        <img id="imagePreview" class="preview" src="#" alt="Image Preview" />
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+            const input = event.target;
+            const image = document.getElementById('imagePreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    image.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    </script>
+</body>
+</html>

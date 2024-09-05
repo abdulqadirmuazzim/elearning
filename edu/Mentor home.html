@@ -1,31 +1,93 @@
-{% extends "base.html" %}
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
-{% load extra %}
 
-{% block content %}
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Index - Mentor Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+
+</head>
 
 <body class="index-page">
 
-  <script>
-    window.onload = () => {
-      document.getElementById('home').classList.add('active')
-    };
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-  </script>
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1 class="sitename">Mentor</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="trainers.html">Trainers</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Dropdown 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Deep Dropdown 1</a></li>
+                  <li><a href="#">Deep Dropdown 2</a></li>
+                  <li><a href="#">Deep Dropdown 3</a></li>
+                  <li><a href="#">Deep Dropdown 4</a></li>
+                  <li><a href="#">Deep Dropdown 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Dropdown 2</a></li>
+              <li><a href="#">Dropdown 3</a></li>
+              <li><a href="#">Dropdown 4</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="courses.html">Get Started</a>
+
+    </div>
+  </header>
+
   <main class="main">
 
     <!-- Hero Section -->
     <section id="hero" class="hero section">
 
-      <img src="{% static 'assets/img/elearning.jpg' %} " alt="" data-aos="fade-in">
+      <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
 
       <div class="container">
         <h2 data-aos="fade-up" data-aos-delay="100" class="">Learning Today,<br>Leading Tomorrow</h2>
-        <!-- <p data-aos="fade-up" data-aos-delay="200">We are team of talented designers making websites with Bootstrap</p> -->
+        <p data-aos="fade-up" data-aos-delay="200">We are team of talented designers making websites with Bootstrap</p>
         <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
-          <a href="{% url 'Login' %}" class="btn-get-started">Get Started</a>
+          <a href="courses.html" class="btn-get-started">Get Started</a>
         </div>
       </div>
 
@@ -39,26 +101,21 @@
         <div class="row gy-4">
 
           <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-            <img src="{% static 'assets/img/about.jpg' %} " class="img-fluid" alt="Hero image">
+            <img src="assets/img/about.jpg" class="img-fluid" alt="">
           </div>
 
           <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
             <h3>Voluptatem dignissimos provident quasi corporis</h3>
             <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
               magna aliqua.
             </p>
             <ul>
-              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Duis aute irure dolor in reprehenderit in voluptate
-                  velit.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                  aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla
-                  pariatur.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
             </ul>
-            <a href="{% url 'Courses' %}" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+            <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
           </div>
 
         </div>
@@ -76,32 +133,28 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="1232" data-purecounter-duration="1"
-                class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="1232" data-purecounter-duration="1" class="purecounter"></span>
               <p class="">Students</p>
             </div>
           </div><!-- End Stats Item -->
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="64" data-purecounter-duration="1"
-                class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="64" data-purecounter-duration="1" class="purecounter"></span>
               <p class="">Courses</p>
             </div>
           </div><!-- End Stats Item -->
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1"
-                class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1" class="purecounter"></span>
               <p class="">Events</p>
             </div>
           </div><!-- End Stats Item -->
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="24" data-purecounter-duration="1"
-                class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="24" data-purecounter-duration="1" class="purecounter"></span>
               <p class="">Trainers</p>
             </div>
           </div><!-- End Stats Item -->
@@ -123,10 +176,8 @@
             <div class="why-box">
               <h3>Why Choose Our Products?</h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad
-                corporis.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad corporis.
               </p>
               <div class="text-center">
                 <a href="#" class="more-btn"><span>Learn More</span> <i class="bi bi-chevron-right"></i></a>
@@ -279,23 +330,22 @@
       <div class="container">
 
         <div class="row">
-          {% for course in Courses|limit:3 %}
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
 
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="course-item">
-              <img src="{{course.cover_photo.url}} " class="img-fluid" alt="...">
+              <img src="assets/img/course-1.jpg" class="img-fluid" alt="...">
               <div class="course-content">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                  <p class="category">{{course.course_name}}</p>
-                  <p class="price">${{course.price}} </p>
+                  <p class="category">Web Development</p>
+                  <p class="price">$169</p>
                 </div>
 
-                <h3><a href="{% url 'Course_detail' course.id %} ">{{course.course_name}}</a></h3>
-                <p class="description">{{course.description|truncatewords:20}}</p>
+                <h3><a href="course-details.html">Website Design</a></h3>
+                <p class="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
                 <div class="trainer d-flex justify-content-between align-items-center">
                   <div class="trainer-profile d-flex align-items-center">
-                    <img src="{{course.trainer.passport_photo.url}} " class="img-fluid" alt="">
-                    <a href="{% url 'about_trainer' course.trainer.user.id %}" class="trainer-link"> {{course.trainer.user.first_name}} </a>
+                    <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="">
+                    <a href="" class="trainer-link">Antonio</a>
                   </div>
                   <div class="trainer-rank d-flex align-items-center">
                     <i class="bi bi-person user-icon"></i>&nbsp;50
@@ -307,26 +357,20 @@
             </div>
           </div> <!-- End Course Item-->
 
-          {% endfor %}
-          
-          {% comment %}
-         
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in"
-            data-aos-delay="200">
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
             <div class="course-item">
-              <img src="{% static 'assets/img/course-2.jpg' %} " class="img-fluid" alt="...">
+              <img src="assets/img/course-2.jpg" class="img-fluid" alt="...">
               <div class="course-content">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <p class="category">Marketing</p>
                   <p class="price">$250</p>
                 </div>
 
-                <h3><a href="{% url 'Course_detail' %}">Search Engine Optimization</a></h3>
-                <p class="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae
-                  dolores dolorem tempore.</p>
+                <h3><a href="course-details.html">Search Engine Optimization</a></h3>
+                <p class="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
                 <div class="trainer d-flex justify-content-between align-items-center">
                   <div class="trainer-profile d-flex align-items-center">
-                    <img src="{% static 'assets/img/trainers/trainer-2-2.jpg' %} " class="img-fluid" alt="">
+                    <img src="assets/img/trainers/trainer-2-2.jpg" class="img-fluid" alt="">
                     <a href="" class="trainer-link">Lana</a>
                   </div>
                   <div class="trainer-rank d-flex align-items-center">
@@ -339,22 +383,20 @@
             </div>
           </div> <!-- End Course Item-->
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in"
-            data-aos-delay="300">
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
             <div class="course-item">
-              <img src="{% static 'assets/img/course-3.jpg' %} " class="img-fluid" alt="...">
+              <img src="assets/img/course-3.jpg" class="img-fluid" alt="...">
               <div class="course-content">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <p class="category">Content</p>
                   <p class="price">$180</p>
                 </div>
 
-                <h3><a href="{% url 'Course_detail' %}">Copywriting</a></h3>
-                <p class="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae
-                  dolores dolorem tempore.</p>
+                <h3><a href="course-details.html">Copywriting</a></h3>
+                <p class="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
                 <div class="trainer d-flex justify-content-between align-items-center">
                   <div class="trainer-profile d-flex align-items-center">
-                    <img src="{% static 'assets/img/trainers/trainer-3-2.jpg' %} " class="img-fluid" alt="">
+                    <img src="assets/img/trainers/trainer-3-2.jpg" class="img-fluid" alt="">
                     <a href="" class="trainer-link">Brandon</a>
                   </div>
                   <div class="trainer-rank d-flex align-items-center">
@@ -366,7 +408,7 @@
               </div>
             </div>
           </div> <!-- End Course Item-->
-          {% endcomment %}
+
         </div>
 
       </div>
@@ -382,13 +424,12 @@
 
           <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
             <div class="member">
-              <img src="{% static 'assets/img/trainers/trainer-1.jpg' %} " class="img-fluid" alt="">
+              <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="">
               <div class="member-content">
                 <h4>Walter White</h4>
                 <span>Web Development</span>
                 <p>
-                  Magni qui quod omnis unde et eos fuga et exercitationem. Odio veritatis perspiciatis quaerat qui aut
-                  aut aut
+                  Magni qui quod omnis unde et eos fuga et exercitationem. Odio veritatis perspiciatis quaerat qui aut aut aut
                 </p>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
@@ -402,13 +443,12 @@
 
           <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
-              <img src="{% static 'assets/img/trainers/trainer-2.jpg' %} " class="img-fluid" alt="">
+              <img src="assets/img/trainers/trainer-2.jpg" class="img-fluid" alt="">
               <div class="member-content">
                 <h4>Sarah Jhinson</h4>
                 <span>Marketing</span>
                 <p>
-                  Repellat fugiat adipisci nemo illum nesciunt voluptas repellendus. In architecto rerum rerum
-                  temporibus
+                  Repellat fugiat adipisci nemo illum nesciunt voluptas repellendus. In architecto rerum rerum temporibus
                 </p>
                 <div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
@@ -422,7 +462,7 @@
 
           <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
             <div class="member">
-              <img src="{% static 'assets/img/trainers/trainer-3.jpg' %} " class="img-fluid" alt="">
+              <img src="assets/img/trainers/trainer-3.jpg" class="img-fluid" alt="">
               <div class="member-content">
                 <h4>William Anderson</h4>
                 <span>Content</span>
@@ -447,13 +487,12 @@
 
   </main>
 
-  {% endblock %}
   <footer id="footer" class="footer position-relative">
 
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
-          <a href="{% url 'Home' %}" class="logo d-flex align-items-center">
+          <a href="index.html" class="logo d-flex align-items-center">
             <span class="sitename">Mentor</span>
           </a>
           <div class="footer-contact pt-3">
@@ -520,8 +559,7 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>

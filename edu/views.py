@@ -19,8 +19,7 @@ def home(req):
             messages.error(req, "Could not Subscribe")
             errors = form.errors.values()
             return render(req, "index.html", dict(err=errors))
-    courses = Course.objects.all()
-    return render(req, "index.html", {"courses": courses})
+    return render(req, "index.html")
 
 
 # about

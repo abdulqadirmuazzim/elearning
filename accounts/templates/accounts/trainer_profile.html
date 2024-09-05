@@ -54,14 +54,13 @@
                       {% csrf_token %}
                       <div class="image-field">
           
-                          <img src="{{profile_pic}}" alt="Profile Picture">
+                          <img src="{{profile_pic}}" alt="Profile Picture" id="imagePreview">
           
                           <input type="file" name="passport_photo" accept="image/*" value="select file" required
                               aria-invalid="true" id="id_passport_photo">
                       </div>
                       <button type="submit" class="btn">change</button>
                   </form>
-
                   </div>
     
           </div>
@@ -75,29 +74,91 @@
               <p><strong>Status:</strong> Trainer</p>
               <a href="{% url 'edit_trainer_profile' %}"><button class="edit-profile-button">Edit <i
                           class="bi bi-pencil"></i></button></a>
-          </div>
-          <!-- End of profile info -->
-        </div>
-      </div>
-
-
-        <div class="courses">      
-        <h2>My courses  <a href="{% url 'course_creation' %}"><i class="bi bi-plus-square"></i></a></h2>
-
-            
-        <div class="courses-train">
-
+                        </div>
+                        <!-- End of profile info -->
+                      </div>
+                    </div>
+                    
+                    
+                    <div class="courses">      
+                      <h2>My courses  <a href="{% url 'course_creation' %}"><i class="bi bi-plus-square"></i></a></h2>
+                      
+                      <div class="courses-train">
+          
+          
             {% for course in courses %}
             {% if course.trainer.user == user %}            
-            <!-- Using the template's html -->
-            <div class="course">
-                <img src="{{course.cover_photo.url}}" class="course-image" alt="...">
-                <div class="course-content">
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <p class="category">{{course.course_name}}</p>
-                    <p class="price">{{ course.price }}</p>
+
+            <!-- Modal for cover photo edit -->
+            <div class="modal fade" id="{{course.id}}-photo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+            
+                    <div class="modal-header">
+                        
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit cover photo</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="container-fluid">
+                          
+                          <form action="{% url 'edit_course' course.id %}" method="post" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <div class="image-field">
+                  
+                                  <img src="{{course.cover_photo.url}}" alt="Profile Picture" id="imagePreview1">
+                  
+                                  <input type="file" name="cover_photo" accept="image/*" value="select file" required
+                                      aria-invalid="true" id="coverPhotoEdit">
+                              </div>
+                              <button type="submit" name="cover_photo" class="btn">change</button>
+                          </form>
+                          </div>
+            
                   </div>
-  
+                </div>
+              </div>
+            </div>
+            <!-- COURSE DELETE MODAL -->
+            <div class="modal fade" id="{{course.id}}-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+            
+                    <div class="modal-header">
+                        
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit cover photo</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="container-fluid">
+                            <p>Are you sure you want to delete this course? All forums, groups and classes will be terminated!</p>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          
+                          <div style="display: flex; align-items: center; justify-content: space-around; width: 100%;">
+                            <a href="{% url 'delete_course' course.id %}"></a><button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                          </div>
+                      </div>
+            
+                  </div>
+                </div>
+              </div>
+            
+            <!-- COURSE CARD -->
+            <div class="course">
+              <!-- THIS BUTTON SHOLD ONLY SHOW ONLY WHEN THIS PICTURE IS HOVERED ON!!! -->
+              <button type="button" class="abs" data-bs-toggle="modal" data-bs-target="#{{course.id}}-photo">
+                <p><abbr title="Edit cover photo" class="initialism">
+                  <i class="bi bi-pen show-on-hover"></i>
+                </abbr></p>
+              </button>
+              
+                <img src="{{course.cover_photo.url}}" class="course-image" alt="...">
+
+                <div class="course-content">
+                  
                   <h3><a href="{% url 'Course_detail' course.id %}">{{course.course_name}}</a></h3>
                   <p class="description">{{course.description|truncatewords:20}}</p>
                   <div class="trainer d-flex justify-content-between align-items-center">
@@ -106,15 +167,77 @@
                           
                         <a href="{% url 'about_trainer' course.trainer.user.id %}" class="trainer-link">{{course.trainer}}</a>
                         <!-- Edit button -->
-                        <a href="{% url 'edit_course' course.id %}"><button class="user-control"> <i class="bi bi-pen"></i></button></a>
-                        <!-- Delete button -->
-                        <a href="{% url 'delete_course' course.id %}"><button class="user-control"><i class="bi bi-trash"></i></button></a>
+                         <!-- Button trigger edit modal -->
+                        <button class="user-control" data-bs-toggle="modal" data-bs-target="#{{course.id}}"> <i class="bi bi-pen"></i></button>
+                        <!-- Delete trigger delets modal -->
+                       <button class="user-control" data-bs-toggle="modal" data-bs-target="#{{course.id}}-delete"><i class="bi bi-trash"></i></button>
                     </div>
                     <div class="trainer-rank d-flex align-items-center">
                       <i class="bi bi-person user-icon"></i>&nbsp;50
                       &nbsp;&nbsp;
                       <i class="bi bi-heart heart-icon"></i>&nbsp;65
-                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modal for course edit-->
+              <div class="modal fade" id="{{course.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Course</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <!-- form -->
+                      <form class="row g-3" method="post" action="{% url 'edit_course' course.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- course name -->
+                        <div class="col-md-6">
+                          <label for="inputEmail4" class="form-label">Course name</label>
+                          <input type="text" class="form-control" name="course_name" value="{{course.course_name}}" id="inputEmail4">
+                        </div>
+                        <!-- course price -->
+                        <div class="col-md-6">
+                          <label for="inputPassword4" class="form-label">Course price</label>
+                          <input type="number" class="form-control" name="price" value="{{course.price}}" id="inputPassword4">
+                        </div>
+                        <!-- Description -->
+                        <div class="col-12">
+                          <label for="inputAddress" class="form-label">Description</label>
+                          <textarea name="description" id="description" rows='3' cols="50">{{course.description}}</textarea>
+                        </div>
+<script>
+  document.getElementById('formFile').addEventListener('change', function(event) {
+const imagePreview = document.getElementById('image-preview');
+const file = event.target.files[0];
+
+if (file) {
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        imagePreview.innerHTML = '';
+        imagePreview.appendChild(img);
+        img.style.display = 'block';
+    };
+    
+    reader.readAsDataURL(file);
+} else {
+    imagePreview.innerHTML = '<p>No image selected</p>';
+}
+});
+
+</script>
+                        <div class="col-12">
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <!-- <button type="button" class="btn btn-secondary">cancel</button> -->
                     </div>
                   </div>
                 </div>
@@ -132,14 +255,39 @@
     </div>
     <hr>
     <script>
-        let picture = document.querySelector(".profile-pic")
-        function pictureForm(){
-            console.log(picture)
-            myModal.handleUpdate()
-        }
+        // let picture = document.querySelector(".profile-pic")
+        // function pictureForm(){
+        //     console.log(picture)
+        //     myModal.handleUpdate()
+        // }
+        // PASSPORT PHOTO
+        document.getElementById('id_passport_photo').addEventListener('change', function(event) {
+          const input = event.target;
+          const image = document.getElementById('imagePreview');
+          if (input.files && input.files[0]) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  image.src = e.target.result;
+              }
+              reader.readAsDataURL(input.files[0]);
+            }
+        });
+        // COVER PHOTO
+        document.getElementById('coverPhotoEdit').addEventListener('change', function(event) {
+          const input = event.target;
+          const image = document.getElementById('imagePreview1');
+          if (input.files && input.files[0]) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  image.src = e.target.result;
+              }
+              reader.readAsDataURL(input.files[0]);
+            }
+          });
        
     </script>
 
+<script src="{% static 'assets/js/main.js' %}"></script>
 </body>
 
 {% endblock %}

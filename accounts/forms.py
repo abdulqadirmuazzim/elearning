@@ -106,3 +106,9 @@ class Course_creation(forms.ModelForm):
     class Meta:
         model = Course
         fields = ["course_name", "cover_photo", "price", "description"]
+
+
+class EditCoverPhoto(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = ["cover_photo"]

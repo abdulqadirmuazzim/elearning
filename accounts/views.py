@@ -6,6 +6,7 @@ from .forms import (
     Edit_Trainer_Passport,
     Course_Reg_form as CRF,
     Course_creation as CC,
+    EditCoverPhoto as ECP,
 )
 from .models import Trainer, Student, Course
 from django.contrib.auth import login, logout, authenticate
@@ -399,17 +400,34 @@ def course_create(req):
 # Course editing page
 def course_edit(req, course_id):
     course = get_object_or_404(Course, id=course_id)
-    if course.trainer.user == req.user:
-        return render(req, "accounts/course_creation.html", {"course": course})
 
-    elif req.user.is_superuser:
-        messages.info(req, "Go edit in the Admin!")
-        return redirect("Home")
+    if course.trainer.user != req.user:
+
+        messages.error(req, "You are not authorized to fill this form")
+        return redirect("DashBoard")
+
+    elif req.method == "POST":
+        if "cover_photo" in req.POST:
+            form = ECP(req.POST, req.FILES)
+            if form.is_valid():
+                photo = form.cleaned_data["cover_photo"]
+                course.cover_photo = photo
+                course.save()
+                messages.success(req, "Course cover photo successfully changed.")
+                return redirect("DashBoard")
+            else:
+                messages.error(req, "Unable to edit cover photo.")
+                return redirect("DashBoard")
+        else:
+            course.course_name = req.POST["course_name"]
+            course.price = req.POST["price"]
+            course.description = req.POST["description"]
+            course.save()
+
+            messages.success(req, "You have successfully updated this course")
+            return redirect("DashBoard")
+
     else:
-        messages.error(
-            req,
-            "You are not allowed to delete a course, and you're not suppose to even see this",
-        )
         return redirect("DashBoard")
 
 
