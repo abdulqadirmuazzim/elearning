@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load extra %}
 {{ block.super }}
 
 {% block content %}
@@ -56,7 +57,7 @@
                 
             </header>
             <section class="courses">
-                <h2>Courses registered: 2 <a href="{% url 'Courses' %}" class="course-reg">Register Course <i class="bi bi-card-list"></i></a></h2>
+                <h2>Courses registered: {{registered_courses}} <a href="{% url 'Courses' %}" class="course-reg">Register Course <i class="bi bi-card-list"></i></a></h2>
                 <div class="course-list">
                     {% for course in courses %}    
                     <div class="course">
@@ -77,51 +78,51 @@
                                 <a href="{% url 'about_trainer' course.trainer.user.id %}" class="trainer-link">{{course.trainer}}</a>
                             </div>
                             <div class="trainer-rank d-flex align-items-center">
-                              <i class="bi bi-person user-icon"></i>&nbsp;50
+                        <i class="bi bi-person user-icon"></i>&nbsp;{{registered_students|subscript:course.course_name}}
                               &nbsp;&nbsp;
-                              <i class="bi bi-heart heart-icon"></i>&nbsp;65
+                              <!-- action="{% url 'like_course' course.id %}" -->
+
+                              <form class="form{{course.id}}" method="">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-none like-button">
+                                    <i class="bi bi-heart heart-icon"></i>&nbsp;{{course_likes|subscript:course.course_name}}
+                                </button>
+                              </form>
                             </div>
                           </div>
                         </div>
                       </div>
-
-                    {% comment %}    
-                    <div class="course">
-                
-                        <a href="{% url 'Course_detail' course.id %}">
-                            <img src="{{course.cover_photo.url}}" alt="Copywriting" class="course-image">
-                        </a>
-                        <div class="course-details">
-                            <p>
-                                <a href="{% url 'Course_detail' course.id %}">
-                                    <h3>{{course}}</h3>
-                            </p>
-                            </a>
-                            <i class="bi bi-person"></i> 10
-                            <i class="bi bi-hand-thumbs-up"></i> 20
-                            <br>
-                        </div>
-                    </div>
-                    {% endcomment %}
-                    
+                    <!-- <script>
+                        const form = document.querySelector(".form{{course.id}}")
+                        const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
+                        console.log(csrf)
+                        form.addEventListener("submit", (e)=>{
+                            e.preventDefault()
+                            const newform = new FormData;
+                            newform.append("csrfmiddlewaretoken", csrf)
+                            fetch("{% url 'like_course' course.id %}", {
+                                method: 'POST',
+                                body: newform,
+                            })
+                        })
+                    </script> -->
                     {% endfor %}
                 </div>
             </section>
             <section class="achievements">
                 <h2>Achievements</h2>
                 <div class="achievement-list">
-                    <img src="achievement1.png" alt="Achievement 1" class="achievement-image">
+                    <!-- <img src="achievement1.png" alt="Achievement 1" class="achievement-image">
                     <img src="achievement2.png" alt="Achievement 2" class="achievement-image">
                     <img src="achievement3.png" alt="Achievement 3" class="achievement-image">
                     <img src="achievement4.png" alt="Achievement 4" class="achievement-image">
                     <img src="achievement5.png" alt="Achievement 5" class="achievement-image">
-                    <img src="achievement6.png" alt="Achievement 6" class="achievement-image">
+                    <img src="achievement6.png" alt="Achievement 6" class="achievement-image"> -->
                 </div>
             </section>
         </div>
     </div>
 </body>
-
 </html>
 
 

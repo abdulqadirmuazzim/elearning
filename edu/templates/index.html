@@ -278,12 +278,14 @@
 
       <div class="container">
 
+       
         <div class="row">
           {% for course in Courses|limit:3 %}
+
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
 
             <div class="course-item">
-              <img src="{{course.cover_photo.url}} " class="img-fluid" alt="...">
+              <img src="{{course.cover_photo.url}} " class="img-fluid height" alt="...">
               <div class="course-content">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <p class="category">{{course.course_name}}</p>
@@ -292,13 +294,15 @@
 
                 <h3><a href="{% url 'Course_detail' course.id %} ">{{course.course_name}}</a></h3>
                 <p class="description">{{course.description|truncatewords:20}}</p>
+               
                 <div class="trainer d-flex justify-content-between align-items-center">
                   <div class="trainer-profile d-flex align-items-center">
                     <img src="{{course.trainer.passport_photo.url}} " class="img-fluid" alt="">
                     <a href="{% url 'about_trainer' course.trainer.user.id %}" class="trainer-link"> {{course.trainer.user.first_name}} </a>
                   </div>
                   <div class="trainer-rank d-flex align-items-center">
-                    <i class="bi bi-person user-icon"></i>&nbsp;50
+                    <!-- number of students who registered -->
+                    <i class="bi bi-person user-icon"></i>&nbsp;{{registered_students|subscript:course.course_name}}
                     &nbsp;&nbsp;
                     <i class="bi bi-heart heart-icon"></i>&nbsp;65
                   </div>

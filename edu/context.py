@@ -14,3 +14,24 @@ def student_registered_courses(req):
         return {"RegisteredCourses": all_courses}
     else:
         return {"RegisteredCourses": None}
+
+
+def num_of_students(req):
+    students = Student.objects.all()
+    courses = Course.objects.all()
+    counts = {}
+    for course in courses:
+        num = 0
+        for stu in students:
+            if course in stu.courses.all():
+                num += 1
+        counts[course.course_name] = num
+
+    return {"registered_students": counts}
+
+
+def course_likes(req):
+    courses = {
+        course.course_name: course.likes.count() for course in Course.objects.all()
+    }
+    return {"course_likes": courses}

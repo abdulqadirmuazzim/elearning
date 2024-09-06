@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from .forms import (
     TrainerForm,
     StudentForm,
@@ -12,6 +12,7 @@ from .models import Trainer, Student, Course
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User, Permission
 from django.contrib import messages
+from django.urls import reverse_lazy, reverse
 
 
 # login user
@@ -57,14 +58,9 @@ def login_user(req):
 def register_trainer(req):
     if req.method == "POST":
         # if the user is signing up
-
         form = TrainerForm(req.POST, req.FILES)
-
-        # check
-
-        # if form is valid
+        # check if form is valid
         if form.is_valid():
-
             # get the username and password
             username = req.POST.get("UserName")
             password = req.POST.get("password1")
@@ -73,11 +69,8 @@ def register_trainer(req):
             lname = req.POST["LastName"]
             bio = req.POST["bio"]
             passport = form.cleaned_data.get("passport_photo")
-
-            # save
             # check to see if username exists
             is_user = User.objects.filter(username=username).exists()
-
             # check to see if email exists
             is_email = User.objects.filter(email=email).exists()
 
@@ -95,7 +88,6 @@ def register_trainer(req):
                         "user_name": username,
                     },
                 )
-
             elif is_email:
                 # if username exists
                 form.add_error("Email", "This email is taken")
@@ -316,11 +308,8 @@ def logout_user(req):
 
 # the user dashboard
 def dash(req, user_id=None):
-
     if req.method == "POST":
-
         trainers = get_object_or_404(Trainer, user=req.user)
-
         form = Edit_Trainer_Passport(req.POST, req.FILES)
 
         if form.is_valid():
@@ -329,32 +318,24 @@ def dash(req, user_id=None):
             trainers.passport_photo = passport
             trainers.save()
             messages.success(req, "You have changed your profile photo")
-
         else:
             messages.error(req, "something went wrong")
             redirect("DashBoard")
-
     # if the user is logged in move on
     if req.user.is_authenticated and req.method == "GET":
-
         # Get the list of all courses and their corresponding trainer data
         courses = Course.objects.select_related("trainer")
-
         # if the user is an Admin
         if req.user.is_superuser:
-
             messages.info(
                 req,
                 "You are a super user, Your profile page is not ready, contact the developer",
             )
             return redirect("Home")
-
         # if the user is a trainer
         if req.user.is_staff and not req.user.is_superuser:
-
             # Get the trainer info
             trainer_profile_pic = Trainer.objects.get(user=req.user)
-
             return render(
                 req,
                 "accounts/trainer_profile.html",
@@ -363,14 +344,18 @@ def dash(req, user_id=None):
                     "courses": courses,
                 },
             )
-
         # else if the user is a student
         elif not req.user.is_staff:
 
             student = Student.objects.get(user=req.user)
             courses = student.courses.all()
+            number_of_courses = student.courses.count()
 
-            return render(req, "accounts/student_profile.html", {"courses": courses})
+            return render(
+                req,
+                "accounts/student_profile.html",
+                {"courses": courses, "registered_courses": number_of_courses},
+            )
 
     # else sent him/her to the login page
     else:
@@ -443,6 +428,15 @@ def course_delete(req, course_id):
         return redirect("DashBoard")
 
 
+# Liking a course
+def like_course(req, course_id):
+    user = get_object_or_404(User, id=req.user.id)
+    course = get_object_or_404(Course, id=course_id)
+    course.likes.add(user)
+    course.save()
+    return HttpResponseRedirect(reverse("DashBoard"))
+
+
 # student course registration page
 def course_reg(req, course_id):
 
@@ -452,7 +446,6 @@ def course_reg(req, course_id):
     # Register for the course
     student.courses.add(course)
     messages.success(req, "You have successfully registered this course")
-
     return redirect("DashBoard")
 
 

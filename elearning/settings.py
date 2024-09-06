@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "edu",
     "accounts",
+    "classes",
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,8 @@ TEMPLATES = [
                 # Custom made context
                 "edu.context.course_links",
                 "edu.context.student_registered_courses",
+                "edu.context.num_of_students",
+                "edu.context.course_likes",
             ],
         },
     },

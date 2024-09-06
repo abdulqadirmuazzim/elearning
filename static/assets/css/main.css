@@ -2248,7 +2248,9 @@ section,
 .btn-secondary{
   background: #656464;
 }
-
+.height{
+  height: 50%;
+}
 .achievement-list {
   display: flex;
   justify-content: space-around;

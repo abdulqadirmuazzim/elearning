@@ -10,6 +10,7 @@ class Trainer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField()
     passport_photo = models.ImageField(upload_to="static/img/")
+    likes = models.ManyToManyField(User, blank=True, related_name="trainer_likes")
 
     def __str__(self):
         return str(self.user)
@@ -21,7 +22,9 @@ class Course(models.Model):
     trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
     cover_photo = models.ImageField(upload_to="static/img/")
     description = models.TextField()
+    # students = models.ManyToManyField(User, blank=True)
     price = models.FloatField()
+    likes = models.ManyToManyField(User, blank=True, related_name="course_likes")
 
     def __str__(self):
         return self.course_name

@@ -18,4 +18,5 @@ urlpatterns = [
     path("trainer/<int:trainer_id>", v.about_trainer, name="about_trainer"),
     path("edit/<int:course_id>", v.course_edit, name="edit_course"),
     path("delete/<int:course_id>", v.course_delete, name="delete_course"),
+    path("like_course/<int:course_id>", v.like_course, name="like_course"),
 ]
