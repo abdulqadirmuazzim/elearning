@@ -429,12 +429,18 @@ def course_delete(req, course_id):
 
 
 # Liking a course
-def like_course(req, course_id):
+def course_like_toggle(req, course_id):
     user = get_object_or_404(User, id=req.user.id)
     course = get_object_or_404(Course, id=course_id)
-    course.likes.add(user)
-    course.save()
-    return HttpResponseRedirect(reverse("DashBoard"))
+
+    if user in course.likes.all():
+        course.likes.remove(user)
+        course.save()
+        return HttpResponseRedirect(reverse("DashBoard"))
+    else:
+        course.likes.add(user)
+        course.save()
+        return HttpResponseRedirect(reverse("DashBoard"))
 
 
 # student course registration page

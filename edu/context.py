@@ -28,10 +28,3 @@ def num_of_students(req):
         counts[course.course_name] = num
 
     return {"registered_students": counts}
-
-
-def course_likes(req):
-    courses = {
-        course.course_name: course.likes.count() for course in Course.objects.all()
-    }
-    return {"course_likes": courses}

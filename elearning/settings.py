@@ -71,7 +71,6 @@ TEMPLATES = [
                 "edu.context.course_links",
                 "edu.context.student_registered_courses",
                 "edu.context.num_of_students",
-                "edu.context.course_likes",
             ],
         },
     },

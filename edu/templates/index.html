@@ -304,7 +304,25 @@
                     <!-- number of students who registered -->
                     <i class="bi bi-person user-icon"></i>&nbsp;{{registered_students|subscript:course.course_name}}
                     &nbsp;&nbsp;
-                    <i class="bi bi-heart heart-icon"></i>&nbsp;65
+                    {% if not user.is_staff and user.is_authenticated %}
+                    {% if user in course.likes.all %}
+                              <form id="{% url 'like_course' course.id %}" class="like-form" onsubmit="like(`{{course.id}}`)">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-none like-button{{course.id}}">
+                                    <i class="bi bi-heart-fill heart-icon" id="icon-{{course.id}}"></i>&nbsp;<p style="display: inline;" id="like-count{{course.id}}" >{{course.likes.count}}</p>
+                                </button>
+                            </form>
+                              {% else %}
+                              <form id="{% url 'like_course' course.id %}" class="like-form" onsubmit="like(`{{course.id}}`)">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-none like-button{{course.id}}">
+                                    <i class="bi bi-heart heart-icon" id="icon-{{course.id}}"></i>&nbsp;<p style="display: inline;" id="like-count{{course.id}}" >{{course.likes.count}}</p>
+                                </button>
+                            </form>
+                            {% endif %}
+                      {% else %}
+                      <i class="bi bi-heart heart-icon" id="icon-{{course.id}}"></i>&nbsp;{{course.likes.count}}
+                    {% endif %}
                   </div>
                 </div>
               </div>

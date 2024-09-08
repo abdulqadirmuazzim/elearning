@@ -129,15 +129,4 @@
 
 })();
 
-/* IMAGE DISPLAY EFFECT */
-document.getElementById('id_passport_photo').addEventListener('change', function(event) {
-  const input = event.target;
-  const image = document.getElementById('imagePreview');
-  if (input.files && input.files[0]) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-          image.src = e.target.result;
-      }
-      reader.readAsDataURL(input.files[0]);
-    }
-});
+

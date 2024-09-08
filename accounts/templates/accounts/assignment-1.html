@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+</head>
+
+<body>
+    <div class="q1">
+        <!-- No 1. -->
+        <button onclick="window.alert('I am learning javascript gradually')">click</button>
+        <!-- No 2. -->
+        <button onclick="window.alert('https:www.theaxiomsltd.com')">axioms</button>
+        <!-- No 3. -->
+        <button onclick="console.log('23 - 1 is:', 23-1)">(23-1): check console</button>
+        <!-- No 4. -->
+        <button onclick="console.log('3+3-7 is:', 3+3-7)">(3+3-7): check console</button>
+        <!-- No 5. -->
+        <button onclick="console.log('My name is Abdulqadir')">Name</button>
+        <!-- No 6. -->
+        <p>Identify the error in :</p>
+        <pre>
+            var x = 10
+            console.log(x);
+        </pre>
+        <p>The error is that there is a space at the begining of the second line of the code</p>
+        <p>The correct sode is:</p>
+        <pre>
+            var x = 10
+            console.log(x);
+        </pre>
+        <!-- No 7. -->
+        <button id="temp">Temperature</button>
+
+        <!-- No 8. -->
+        <button id="count">counter</button>
+
+        <!-- No 9. -->
+        <button id="area">area</button>
+
+        <!-- No 10. -->
+        <div class="q10">
+            <div id="cart">0</div>
+
+            <button id="add" onclick="document.getElementById('cart').innerHTML=qty=qty+1">Add
+                to
+                cart</button>
+            <button id="remove" onclick="remove_it()">Remove</button>
+        </div>
+        <!-- No 11. -->
+        <img src="hands up.png" alt="hands up" id="hands">
+        <!-- <img src="hands down.png" alt="hands down" id="hands_down"> -->
+
+        <button id="up" onclick="document.getElementById('hands').src='hands down.png'">Hands Down</button>
+        <button id="up" onclick="document.getElementById('hands').src='hands up.png'">Hands Up</button>
+    </div>
+
+    <script>
+        var temperature = 20;
+        const button = document.getElementById("temp")
+        button.addEventListener("click", () => { console.log(`The temperature is:${temperature}`) })
+
+        let counter = 0;
+        counter = counter + 5
+        var count = document.getElementById("count")
+        count.addEventListener("click", () => {
+            console.log("New value of counter is", counter)
+        })
+
+        let width = 10;
+        let height = 5;
+        var area = document.getElementById("area")
+
+        area.addEventListener("click", () => {
+            console.log("The area of the rectangle with width of 10 units and height af  units is:",
+                width * height)
+        })
+        // question 10
+        let qty = 0
+        const zero = 0
+
+        function remove_it() {
+            // if the value is less than zero
+            if (document.getElementById('cart').innerHTML <= 0) {
+                document.getElementById("cart").innerHTML == zero;
+            }
+            else {
+                document.getElementById("cart").innerHTML = qty = qty - 1;
+
+            }
+        }
+
+
+    </script>
+</body>
+
+<style>
+    .q1 {
+        margin: 0px 10px;
+        padding: 15px;
+        justify-content: center;
+        display: grid
+    }
+
+    button {
+        display: inline-block;
+        width: 100px;
+        height: 30px;
+        margin-bottom: 20px;
+    }
+
+    .q10 {
+        display: flex;
+        padding: 15px;
+        margin: 15px;
+        align-items: flex-end;
+    }
+
+    #cart {
+        width: 100px;
+        height: 100px;
+        background-color: aquamarine;
+        border-radius: 50px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        font-size: 30px;
+        margin: 20px;
+    }
+
+    #add,
+    #remove {
+        margin: 10px;
+    }
+</style>
+
+</html>

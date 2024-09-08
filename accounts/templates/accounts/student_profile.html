@@ -80,32 +80,26 @@
                             <div class="trainer-rank d-flex align-items-center">
                         <i class="bi bi-person user-icon"></i>&nbsp;{{registered_students|subscript:course.course_name}}
                               &nbsp;&nbsp;
-                              <!-- action="{% url 'like_course' course.id %}" -->
-
-                              <form class="form{{course.id}}" method="">
+                              {% if user in course.likes.all %}
+                              <form id="{% url 'like_course' course.id %}" class="like-form" onsubmit="like(`{{course.id}}`)">
                                 {% csrf_token %}
-                                <button type="submit" class="btn-none like-button">
-                                    <i class="bi bi-heart heart-icon"></i>&nbsp;{{course_likes|subscript:course.course_name}}
+                                <button type="submit" class="btn-none like-button{{course.id}}">
+                                    <i class="bi bi-heart-fill heart-icon" id="icon-{{course.id}}"></i>&nbsp;<p style="display: inline;" id="like-count{{course.id}}" >{{course.likes.count}}</p>
                                 </button>
-                              </form>
+                            </form>
+                              {% else %}
+                              <form id="{% url 'like_course' course.id %}" class="like-form" onsubmit="like(`{{course.id}}`)">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-none like-button{{course.id}}">
+                                    <i class="bi bi-heart heart-icon" id="icon-{{course.id}}"></i>&nbsp;<p style="display: inline;" id="like-count{{course.id}}" >{{course.likes.count}}</p>
+                                </button>
+                            </form>
+                            {% endif %}
                             </div>
                           </div>
                         </div>
                       </div>
-                    <!-- <script>
-                        const form = document.querySelector(".form{{course.id}}")
-                        const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
-                        console.log(csrf)
-                        form.addEventListener("submit", (e)=>{
-                            e.preventDefault()
-                            const newform = new FormData;
-                            newform.append("csrfmiddlewaretoken", csrf)
-                            fetch("{% url 'like_course' course.id %}", {
-                                method: 'POST',
-                                body: newform,
-                            })
-                        })
-                    </script> -->
+
                     {% endfor %}
                 </div>
             </section>
@@ -122,6 +116,9 @@
             </section>
         </div>
     </div>
+
+
+
 </body>
 </html>
 

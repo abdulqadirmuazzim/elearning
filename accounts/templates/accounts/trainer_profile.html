@@ -62,7 +62,6 @@
                       <button type="submit" class="btn">change</button>
                   </form>
                   </div>
-    
           </div>
         </div>
       </div>
@@ -106,10 +105,10 @@
                               {% csrf_token %}
                               <div class="image-field">
                   
-                                  <img src="{{course.cover_photo.url}}" alt="Profile Picture" id="imagePreview1">
+                                  <img src="{{course.cover_photo.url}}" alt="Profile Picture" class="imagePreview">
                   
                                   <input type="file" name="cover_photo" accept="image/*" value="select file" required
-                                      aria-invalid="true" id="coverPhotoEdit">
+                                      aria-invalid="true" class="coverPhotoEdit">
                               </div>
                               <button type="submit" name="cover_photo" class="btn">change</button>
                           </form>
@@ -175,7 +174,7 @@
                     <div class="trainer-rank d-flex align-items-center">
                       <i class="bi bi-person user-icon"></i>&nbsp;{{registered_students|subscript:course.course_name}}
                       &nbsp;&nbsp;
-                      <i class="bi bi-heart heart-icon"></i>&nbsp;65
+                      <i class="bi bi-heart heart-icon"></i>&nbsp;{{course.likes.count}}
                     </div>
                   </div>
                 </div>
@@ -208,30 +207,7 @@
                           <label for="inputAddress" class="form-label">Description</label>
                           <textarea name="description" id="description" rows='3' cols="50">{{course.description}}</textarea>
                         </div>
-<script>
-  document.getElementById('formFile').addEventListener('change', function(event) {
-const imagePreview = document.getElementById('image-preview');
-const file = event.target.files[0];
-
-if (file) {
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        imagePreview.innerHTML = '';
-        imagePreview.appendChild(img);
-        img.style.display = 'block';
-    };
-    
-    reader.readAsDataURL(file);
-} else {
-    imagePreview.innerHTML = '<p>No image selected</p>';
-}
-});
-
-</script>
-                        <div class="col-12">
+              <div class="col-12">
                           <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                       </form>
@@ -255,11 +231,7 @@ if (file) {
     </div>
     <hr>
     <script>
-        // let picture = document.querySelector(".profile-pic")
-        // function pictureForm(){
-        //     console.log(picture)
-        //     myModal.handleUpdate()
-        // }
+
         // PASSPORT PHOTO
         document.getElementById('id_passport_photo').addEventListener('change', function(event) {
           const input = event.target;
@@ -273,17 +245,22 @@ if (file) {
             }
         });
         // COVER PHOTO
-        document.getElementById('coverPhotoEdit').addEventListener('change', function(event) {
-          const input = event.target;
-          const image = document.getElementById('imagePreview1');
-          if (input.files && input.files[0]) {
-              const reader = new FileReader();
-              reader.onload = function(e) {
-                  image.src = e.target.result;
+        document.querySelectorAll('.coverPhotoEdit').forEach(element=>{
+          element.addEventListener('change', function(event) {
+            const input = event.target;
+            const image = document.querySelectorAll('.imagePreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                  image.forEach(img=>{
+                    img.src = e.target.result;
+                  }) 
+                }
+                reader.readAsDataURL(input.files[0]);
               }
-              reader.readAsDataURL(input.files[0]);
-            }
-          });
+            });
+
+        })
        
     </script>
 
