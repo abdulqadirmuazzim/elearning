@@ -1,10 +1,5 @@
 from django.contrib import admin
-from .models import Comment, Chat
-
-
-class CommentDisplay(admin.ModelAdmin):
-    model = Comment
-    list_display = ["user", "student", "trainer", "date_commented"]
+from .models import Chat
 
 
 class ChatDisplay(admin.ModelAdmin):
@@ -12,5 +7,4 @@ class ChatDisplay(admin.ModelAdmin):
     list_display = ["sender", "receiver", "time"]
 
 
-admin.site.register(Comment, CommentDisplay)
 admin.site.register(Chat, ChatDisplay)

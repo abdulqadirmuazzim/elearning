@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 whitenoise = "*"
 django = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 ipykernel = "*"

@@ -350,13 +350,13 @@ def dash(req, user_id=None):
             student = Student.objects.get(user=req.user)
             courses = student.courses.all()
             number_of_courses = student.courses.count()
+            context = {
+                "courses": courses,
+                "registered_courses": number_of_courses,
+                "student": student,
+            }
 
-            return render(
-                req,
-                "accounts/student_profile.html",
-                {"courses": courses, "registered_courses": number_of_courses},
-            )
-
+            return render(req, "accounts/student_profile.html", context)
     # else sent him/her to the login page
     else:
         return redirect("Login")

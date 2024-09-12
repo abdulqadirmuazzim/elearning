@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404 as goo4
-from .forms import comment, subscription
+from .forms import comment, subscription, CourseComment_form
 from accounts.models import Course, Trainer
 from django.contrib import messages
+from accounts.models import Course_Comment, Student
 
 # Create your views here.
 
@@ -36,7 +37,24 @@ def courses(req):
 # course details
 def course_detail(req, course_id):
     course = goo4(Course, id=course_id)
-    return render(req, "course-details.html", {"course": course})
+    student = goo4(Student, user=req.user)
+    comments = Course_Comment.objects.filter(course=course)
+
+    if req.method == "POST":
+        comment = req.POST["comment"]
+        course_comment = Course_Comment.objects.create(
+            user=student, course=course, comment=comment
+        )
+        print(course_comment)
+        course_comment.save()
+
+    context = {"course": course, "comments": comments}
+    return render(req, "course-details.html", context)
+
+
+# class course_detail(generic.detail):
+#     template_name = ""
+#     model = Course
 
 
 # events

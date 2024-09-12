@@ -33,4 +33,21 @@ class Course(models.Model):
 # students
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_picture = models.ImageField(
+        upload_to="static/students", default="static/assets/img/mylogo.png"
+    )
     courses = models.ManyToManyField(Course, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+
+# comments
+class Course_Comment(models.Model):
+    user = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    comment = models.TextField()
+    time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.comment

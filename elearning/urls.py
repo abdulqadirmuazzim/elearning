@@ -18,10 +18,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import handler404
+import debug_toolbar
 
 handler404 = "edu.views.not_found"
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("edu.urls")),
     path("accounts/", include("accounts.urls")),
+    path("__debug__/", include(debug_toolbar.urls)),
 ]

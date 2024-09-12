@@ -1,10 +1,8 @@
 from django.contrib import admin
-from .models import Student, Trainer, Course
+from .models import Student, Trainer, Course, Course_Comment
 
 
 # fields that will show in the admin
-
-
 
 
 class Course_display(admin.ModelAdmin):
@@ -22,7 +20,14 @@ class TrainerDisplay(admin.ModelAdmin):
     list_display = ["user"]
 
 
+class CourseCommentDisplay(admin.ModelAdmin):
+    model = Course_Comment
+    list_display = ["user", "course", "time", "comment"]
+
+
 admin.site.register(Student, StudentDisplay)
+
+admin.site.register(Course_Comment, CourseCommentDisplay)
 
 admin.site.register(Trainer, TrainerDisplay)
 

@@ -96,6 +96,7 @@
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Course Fee</h5>
               <p>${{course.price}}</p>
+              
             </div>
 
             <!-- <div class="course-info d-flex justify-content-between align-items-center">
@@ -130,7 +131,7 @@
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="row">
+        {% comment %} <div class="row">
           <div class="col-lg-3">
             <ul class="nav nav-tabs flex-column">
               <li class="nav-item">
@@ -228,11 +229,72 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> {% endcomment %}
+        <!-- h1 title -->
+        <h1>Comments</h1> {% if not user.is_staff %} <button id="btn" class="inline-button" >Add a comment</button> {% endif %}
+        <!-- Form -->
+        
+        <div class="vstack gap-1 comments">
+        {% for comment in comments %}
 
+        <p>{{comment.user}}</p>
+        <div class="p-2">{{comment}}</div>
+        
+        {% empty %}
+        
+        <div class="p-2">There are no comments yet.</div>
+        {% endfor %}
+
+        </div>
       </div>
 
-    </section><!-- /Tabs Section -->
+    </section>
+    <!-- /Tabs Section -->
+
+    <style>
+      .comments{
+        border: 1px solid #6f6f6f;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      .inline-button{
+        display: inline;
+        margin: 10px 0;
+        border: none;
+        outline: none;
+        background-color: #2a8df7;
+        color: white;
+        border-radius: 5px;
+        padding: 5px;
+      }
+      .inline-danger{
+        background-color: #fa3030;
+      }
+    </style>
+
+    <script>
+        let comment = document.querySelector(".comments")
+        let button = document.querySelector(".inline-button")
+        button.addEventListener("click", ()=>{
+          comment.insertAdjacentHTML(
+            "beforebegin",
+            ` <form action="{% url 'Course_detail' course.id %}" id="comment-form" method="post">
+              {% csrf_token %}
+          <textarea name="comment" id="" class="form-control" rows="3"></textarea>
+          <button type="submit" class=" inline-button btn-primary mb-3">Comment</button>
+          <button type="button" id="cancel" class="inline-button inline-danger">Cancel</button>
+          </form>
+          `
+        )
+        button.style.display = 'none'
+        
+        let cancel = document.getElementById("cancel")
+        cancel.addEventListener("click", ()=>{
+          document.getElementById("comment-form").style.display = 'none'
+          button.style.display = "inline"
+        })
+        })
+    </script>
 
   </main>
   {% endblock %}
