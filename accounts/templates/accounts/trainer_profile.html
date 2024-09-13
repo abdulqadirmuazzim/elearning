@@ -14,12 +14,11 @@
     
     <!-- Button trigger modal -->
     
-
     <div class="profile-container">
-
+      
       <p class="d-inline-flex gap-1">
-        <button class="btn btn-primary" type="button" id="info-button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-          View profile info
+        <button class="off-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <i class="bi bi-person-fill"></i>
         </button>
       </p>
 
@@ -34,38 +33,36 @@
                   <img src="{{profile_pic}}" alt="Profile Picture" class="profile-pic" style="cursor: pointer;" onclick="pictureForm()">
                 </button>
               </h2>
-    
-              <!-- Button trigger modal -->
-    
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-    
-            <div class="modal-header">
-                
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit photo</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <div class="container-fluid">
-                  
-                  <form action="" method="post" enctype="multipart/form-data">
-                      {% csrf_token %}
-                      <div class="image-field">
-          
-                          <img src="{{profile_pic}}" alt="Profile Picture" id="imagePreview">
-          
-                          <input type="file" name="passport_photo" accept="image/*" value="select file" required
-                              aria-invalid="true" id="id_passport_photo">
-                      </div>
-                      <button type="submit" class="btn">change</button>
-                  </form>
+  
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+              
+                      <div class="modal-header">
+                          
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Profile Picture</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                            
+                            <form action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="image-field">
+                    
+                                    <img src="{{profile_pic}}" alt="Profile Picture" id="imagePreview">
+                    
+                                    <input type="file" name="passport_photo" accept="image/*" value="select file" required
+                                        aria-invalid="true" id="id_passport_photo">
+                                </div>
+                                <button type="submit" class="btn">change</button>
+                            </form>
+                            </div>
+                    </div>
                   </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                </div>
+              </div>
     
               <p><strong>First Name:</strong> {{user.first_name}}</p>
               <p><strong>Last Name:</strong> {{user.last_name}}</p>
@@ -73,11 +70,11 @@
               <p><strong>Status:</strong> Trainer</p>
               <a href="{% url 'edit_trainer_profile' %}"><button class="edit-profile-button">Edit <i
                           class="bi bi-pencil"></i></button></a>
-                        </div>
-                        <!-- End of profile info -->
-                      </div>
-                    </div>
-                    
+          </div>
+          <!-- End of profile info -->
+        </div>
+      </div>
+      
                     
                     <div class="courses">      
                       <h2>My courses  <a href="{% url 'course_creation' %}"><i class="bi bi-plus-square"></i></a></h2>

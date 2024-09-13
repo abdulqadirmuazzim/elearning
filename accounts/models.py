@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 # Let's create a model for the instructors and courses
@@ -47,7 +48,7 @@ class Course_Comment(models.Model):
     user = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     comment = models.TextField()
-    time = models.DateTimeField(auto_now=True)
+    time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.comment

@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 {% load extra %}
-{{ block.super }}
 
 {% block content %}
 
+{% block nav %}
+  
+{% endblock %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +23,6 @@
         
         <div class="main-content">
             <header>
-
                 <div class="offcanva">
                     <button class="off-button" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i
@@ -37,12 +38,15 @@
         
                             <div class="sidebar-offcanva">
                                 <div class="profile-info">
-                                    <p><strong>First Name:</strong> {{user.first_name}}</p>
-                                    <p><strong>Last Name:</strong> {{user.last_name}}</p>
-                                    <p><strong>Email:</strong> {{user.email}}@gmail.com</p>
-                                    <p><strong>Status:</strong> Student</p>
-                                    <a href="{% url 'edit_student_profile' %}"><button class="edit-profile-button">Edit <i
-                                                class="bi bi-pencil"></i></button></a>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><p><strong>First Name:</strong> {{user.first_name}}</p></li>
+                                        <li class="list-group-item"> <p><strong>Last Name:</strong> {{user.last_name}}</p></li>
+                                        <li class="list-group-item"><p><strong>Email:</strong> {{user.email}}@gmail.com</p></li>
+                                        <li class="list-group-item"><p><strong>Status:</strong> Student</p></li>
+                                        <a href="{% url 'edit_student_profile' %}"><li class="list-group-item list-group-item-action">Edit <i
+                                                    class="bi bi-pencil"></i></li></a>
+                                    </ul>
+   <!-- edit-profile-button  -->
                                 </div>
                             </div>
         
@@ -51,13 +55,51 @@
                 </div>
 
                 <h1>@ {{user}} </h1>
-                <a href="{% url 'Home' %}">
+                <button class="btn-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                    <img src="{{student.profile_picture.url}}" alt="Profile Picture" class="profile-pic"> 
-                </a>
+                </button>
+                
+                <!-- Modal for editing profile picture -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">   
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Profile Picture</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                            
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="image-field">
+                            
+                                            <img src="{{student.profile_picture.url}}" alt="Profile Picture" id="imagePreview">
+                            
+                                            <input type="file" name="profile_picture" accept="image/*" value="select file" required
+                                                aria-invalid="true" id="id_profile_picture">
+                                        </div>
+                                        <button type="submit" class="btn">change</button>
+                                    </form>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
                 
             </header>
             <section class="courses">
-                <h2>Courses registered: {{registered_courses}} <a href="{% url 'Courses' %}" class="course-reg">Register Course <i class="bi bi-card-list"></i></a></h2>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col">
+                        <h2>Courses: {{registered_courses}}</h2>
+                        </div>
+                        <div class="col">
+                        <a href="{% url 'Courses' %}" class="course-reg">Register Course <i class="bi bi-card-list"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="course-list">
                     {% for course in courses %}    
                     <div class="course">
@@ -116,7 +158,19 @@
             </section>
         </div>
     </div>
-
+    <script>
+        document.getElementById('id_profile_picture').addEventListener('change', function(event) {
+          const input = event.target;
+          const image = document.getElementById('imagePreview');
+          if (input.files && input.files[0]) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  image.src = e.target.result;
+              }
+              reader.readAsDataURL(input.files[0]);
+            }
+        });
+    </script>
 
 
 </body>

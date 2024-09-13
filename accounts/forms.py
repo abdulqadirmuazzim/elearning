@@ -61,6 +61,13 @@ class StudentForm(UserCreationForm):
             "password2",
         ]
 
+class Edit_Student_picture(UserChangeForm):
+    profile_picture = forms.ImageField(required=True)
+
+    class Meta:
+        model = User
+        fields = ["profile_picture"]
+    
 
 class Course_Reg_form(forms.ModelForm):
 

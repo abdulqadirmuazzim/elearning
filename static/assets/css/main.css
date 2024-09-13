@@ -2014,6 +2014,15 @@ section,
   border: 0.5px solid #4CAF50;
 }
 
+.cta{
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: #fff;
+  outline: none;
+  border: none;
+}
+
 /* Dash board styles */
 
 .profile-container {

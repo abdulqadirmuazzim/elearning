@@ -7,6 +7,7 @@ from .forms import (
     Course_Reg_form as CRF,
     Course_creation as CC,
     EditCoverPhoto as ECP,
+    Edit_Student_picture,
 )
 from .models import Trainer, Student, Course
 from django.contrib.auth import login, logout, authenticate
@@ -238,10 +239,8 @@ def register_student(req):
                         "user_name": username,
                     },
                 )
-
             else:
                 # create a new user
-
                 user = User.objects.create(
                     username=username,
                     email=email,
@@ -250,14 +249,11 @@ def register_student(req):
                     password=userform.password,
                 )
                 Student.objects.create(user=user)
-
             # authenticate and  log the user in
             user = authenticate(username=username, password=password)
             print(f"the user {user}.")
-
             if user is not None:
                 login(req, user)
-
                 # drop a success message
                 messages.success(req, "You have successfully registered!")
                 # render back the page
@@ -309,15 +305,30 @@ def logout_user(req):
 # the user dashboard
 def dash(req, user_id=None):
     if req.method == "POST":
-        trainers = get_object_or_404(Trainer, user=req.user)
-        form = Edit_Trainer_Passport(req.POST, req.FILES)
+
+        form = lambda x, y: (
+            Edit_Trainer_Passport(x, y)
+            if "passport_photo" in y
+            else Edit_Student_picture(x, y)
+        )
+        form = form(req.POST, req.FILES)
 
         if form.is_valid():
-            passport = form.cleaned_data["passport_photo"]
-            # save the photo
-            trainers.passport_photo = passport
-            trainers.save()
-            messages.success(req, "You have changed your profile photo")
+            # if it's a trainer
+            if "passport_photo" in req.FILES:
+                passport = form.cleaned_data["passport_photo"]
+                trainers = get_object_or_404(Trainer, user=req.user)
+                trainers.passport_photo = passport
+                trainers.save()
+                messages.success(req, "You have changed your profile photo")
+            # if it's a student
+            elif "profile_picture" in req.FILES:
+                passport = form.cleaned_data["profile_picture"]
+                student = get_object_or_404(Student, user=req.user)
+                student.profile_picture = passport
+                student.save()
+                messages.success(req, "You have changed your profile photo")
+
         else:
             messages.error(req, "something went wrong")
             redirect("DashBoard")

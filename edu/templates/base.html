@@ -43,12 +43,8 @@
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
                 <h1 class="sitename">Learn</h1>
-            </a>
-            {% comment %}
-              
-            {% block nav %}
-            {% endcomment %}
-            
+            </a>           
+            {% block nav %}           
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="{% url 'Home' %}" id="home">Home</a></li>
@@ -63,20 +59,16 @@
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
             
-            {% comment %}
             {% endblock %}
-              
-            {% endcomment %}
 
-            {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
             <a class="btn-getstarted" href="{% url 'DashBoard' %}">Profile</a>
 
             <a class="btn-getstarted" href="{% url 'Logout' %}">Logout</a>
 
             {% else %}
 
-            <a class="btn-getstarted" href="{% url 'Login' %}">Login</a>
-            <a class="btn-getstarted" href="{% url 'RedirectMe' %}">Signup</a>
+            <a class="btn-getstarted" href="{% url 'Login' %}">Get Started</a>
             {% endif %}
 
         </div>
