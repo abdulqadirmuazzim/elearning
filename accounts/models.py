@@ -43,11 +43,18 @@ class Student(models.Model):
         return self.user.username
 
 
+# Replies to comments
+class Reply(models.Model):
+    reply = models.TextField()
+    date_time = models.DateTimeField(default=timezone.now)
+
+
 # comments
 class Course_Comment(models.Model):
     user = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     comment = models.TextField()
+    reply = models.ManyToManyField(Reply, blank=True)
     time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

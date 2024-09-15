@@ -36,20 +36,26 @@ def courses(req):
 
 # course details
 def course_detail(req, course_id):
+
     course = goo4(Course, id=course_id)
-    student = goo4(Student, user=req.user)
     comments = Course_Comment.objects.filter(course=course)
 
-    if req.method == "POST":
-        comment = req.POST["comment"]
-        course_comment = Course_Comment.objects.create(
-            user=student, course=course, comment=comment
-        )
-        print(course_comment)
-        course_comment.save()
+    if req.user.is_authenticated and not req.user.is_staff:
+        student = goo4(Student, user=req.user)
 
-    context = {"course": course, "comments": comments}
-    return render(req, "course-details.html", context)
+        if req.method == "POST":
+            comment = req.POST["comment"]
+            course_comment = Course_Comment.objects.create(
+                user=student, course=course, comment=comment
+            )
+            print(course_comment)
+            course_comment.save()
+
+        context = {"course": course, "comments": comments}
+        return render(req, "course-details.html", context)
+    else:
+        context = {"course": course, "comments": comments}
+        return render(req, "course-details.html", context)
 
 
 # class course_detail(generic.detail):

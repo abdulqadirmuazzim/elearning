@@ -10,7 +10,7 @@ class Chat(models.Model):
         User, on_delete=models.CASCADE, related_name="receiver"
     )
     message = models.TextField(blank=True)
-    time = models.DateTimeField(auto_now=True)
+    time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.message

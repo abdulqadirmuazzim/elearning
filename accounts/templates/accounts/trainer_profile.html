@@ -15,12 +15,13 @@
     <!-- Button trigger modal -->
     
     <div class="profile-container">
-      
-      <p class="d-inline-flex gap-1">
-        <button class="off-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        <i class="bi bi-person-fill"></i>
-        </button>
-      </p>
+      <div class="d-flex justify-content-center">
+        <p class="d-inline-flex gap-1" style="align-self: center;">
+          <button class="off-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          <i class="bi bi-person-fill"></i>
+          </button>
+        </p>
+      </div>
 
       <div class="collapse" id="collapseExample">
         <div class="card card-body">
@@ -76,10 +77,10 @@
       </div>
       
                     
-                    <div class="courses">      
-                      <h2>My courses  <a href="{% url 'course_creation' %}"><i class="bi bi-plus-square"></i></a></h2>
-                      
-                      <div class="courses-train">
+        <div class="courses">      
+          <h2>My courses  <a href="{% url 'course_creation' %}"><i class="bi bi-plus-square"></i></a></h2>
+          
+          <div class="courses-train">
           
           
             {% for course in courses %}

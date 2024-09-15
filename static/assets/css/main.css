@@ -2205,7 +2205,7 @@ section,
   height: 50px;
   top: 0;
   right: 0;
-  z-index: 10;
+  z-index: 1;
   background-color: #ffffff84;
   transition: 0.3s;
   border-radius: 20%;

@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load extra %}
 
 <head>
   <meta charset="utf-8">
@@ -79,6 +80,7 @@
 
         <div class="row">
           <div class="col-lg-8">
+
             <img src="{{course.cover_photo.url}}" class="img-fluid" alt="">
             <h3>About this course</h3>
             <p>
@@ -96,7 +98,16 @@
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Course Fee</h5>
               <p>${{course.price}}</p>
-              
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Students</h5>
+              <p>{{registered_students|subscript:course.course_name}}</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Likes</h5>
+              <p>{{course.likes.count}}</p>
             </div>
 
             <!-- <div class="course-info d-flex justify-content-between align-items-center">
@@ -130,10 +141,12 @@
     <section id="tabs" class="tabs section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
+        {% if user.is_authenticated %}
         <!-- h1 title -->
         <h1>Comments</h1> {% if not user.is_staff %} <button id="btn" class="inline-button" >Add a comment</button> {% endif %}
         <!-- Form -->
+          
+        {% endif %}
         
         <div class="vstack gap-1 comments">
         {% for comment in comments %}
