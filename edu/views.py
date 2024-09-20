@@ -3,6 +3,7 @@ from .forms import comment, subscription, CourseComment_form
 from accounts.models import Course, Trainer
 from django.contrib import messages
 from accounts.models import Course_Comment, Student
+from django.urls import reverse, reverse_lazy
 
 # Create your views here.
 
@@ -11,7 +12,6 @@ from accounts.models import Course_Comment, Student
 def home(req):
     if req.method == "POST":
         form = subscription(req.POST)
-        print(form)
         if form.is_valid():
             form.save()
             messages.success(req, "You have successfully subscibed")

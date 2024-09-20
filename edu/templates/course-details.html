@@ -143,8 +143,16 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         {% if user.is_authenticated %}
         <!-- h1 title -->
-        <h1>Comments</h1> {% if not user.is_staff %} <button id="btn" class="inline-button" >Add a comment</button> {% endif %}
-        <!-- Form -->
+        <h1>Comments</h1> {% if not user.is_staff %} <button id="btn-show" class="inline-button" onclick="showComment()">Add a comment</button> {% endif %}
+        
+        <!-- Comment Form -->
+         <form action="{% url 'Course_detail' course.id %}" id="comment-form" method="post" style="display: none;"></form>
+              {% csrf_token %}
+          <textarea name="comment" id="" class="form-control" rows="3"></textarea>
+          <button type="submit" class=" inline-button btn-primary mb-3">Comment</button>
+          <button type="button" id="cancel" class="inline-button inline-danger" onclick="hideComment()">Cancel</button>
+          </form>
+        <!-- End Comment Form -->
           
         {% endif %}
         
@@ -172,8 +180,19 @@
               <div class="trainer-rank d-flex align-items-center">
                 <button class="btn-none"><i class="bi bi-heart"></i>&nbsp;</button>
                 &nbsp;&nbsp;
-                <button class="btn-none"><i class="bi bi-reply"></i>&nbsp;</button>
+                <button class="btn-none" onclick="formAppear('{{comment.id}}')" ><i class="bi bi-reply"></i>&nbsp;</button>
               </div>
+
+              <!-- Reply Form -->
+              <form action="" id="reply-form{{comment.id}}" class="form-control" style="display: none;">
+                <textarea name="reply" id="reply-text" class="form-control-sm w-100 h-75"></textarea>
+                <div class="d-flex">
+                  <button type="submit" class="btn btn-primary mx-1 my-1">reply</button>
+                  <button type="button" class="btn btn-outline-danger mx-1 my-1" onclick="formDelete('{{comment.id}}')">cancel</button>
+                </div>
+              </form>
+              <!-- End of reply form -->
+
               {% endif %}
             </div>
           </div>
@@ -213,26 +232,38 @@
 
     <script>
         let comment = document.querySelector(".comments")
-        let button = document.querySelector(".inline-button")
-        button.addEventListener("click", ()=>{
-          comment.insertAdjacentHTML(
-            "beforebegin",
-            ` <form action="{% url 'Course_detail' course.id %}" id="comment-form" method="post">
-              {% csrf_token %}
-          <textarea name="comment" id="" class="form-control" rows="3"></textarea>
-          <button type="submit" class=" inline-button btn-primary mb-3">Comment</button>
-          <button type="button" id="cancel" class="inline-button inline-danger">Cancel</button>
-          </form>
-          `
-        )
-        button.style.display = 'none'
+        let button = document.querySelector("#btn-show")
+        let commentForm = document.getElementById("comment-form")
+        // Function to make comment form appear
+        const showComment = () => {
+          document.addEventListener("click", ()=>{
+            commentForm.style.display = "block"
+            button.style.display = "none"
+          })
+        }
+        const hideComment = () => {
+          document.addEventListener("click", ()=>{
+            commentForm.style.display = "none"
+            button.style.display = "block"
+          })
+        }
+   
+
+        // Function to make reply form appear
+        function formAppear(id){
+          document.addEventListener("click", ()=>{
+            const form = document.getElementById(`reply-form${id}`)
+            form.style.display = "block"
+          })
+        }
         
-        let cancel = document.getElementById("cancel")
-        cancel.addEventListener("click", ()=>{
-          document.getElementById("comment-form").style.display = 'none'
-          button.style.display = "inline"
-        })
-        })
+        const formDelete = (id) => {
+            document.addEventListener("click", ()=>{
+              const form = document.getElementById(`reply-form${id}`)
+              form.style.display = "none"
+            })
+        }
+        
     </script>
 
   </main>

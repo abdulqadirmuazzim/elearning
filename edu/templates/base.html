@@ -151,7 +151,7 @@
                     <form action="{% url 'Home' %}" method="post" class="">
                         {% csrf_token %}
                         <div class="newsletter-form">
-                            <input type="email" name="Email">
+                            <input type="email" name="Email" required>
                             <input type="submit" value="Subscribe">
                         </div>
                         <!-- <div class="loading">Loading</div> -->
