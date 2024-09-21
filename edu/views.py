@@ -1,8 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404 as goo4
-from .forms import comment, subscription, CourseComment_form
+from django.shortcuts import (
+    render,
+    redirect,
+    get_object_or_404 as goo4,
+    HttpResponseRedirect,
+)
+from .forms import comment, subscription, CourseComment_form, ReplyForm
 from accounts.models import Course, Trainer
 from django.contrib import messages
-from accounts.models import Course_Comment, Student
+from accounts.models import Course_Comment, Student, Reply
 from django.urls import reverse, reverse_lazy
 
 # Create your views here.
@@ -36,25 +41,37 @@ def courses(req):
 
 # course details
 def course_detail(req, course_id):
-
     course = goo4(Course, id=course_id)
     comments = Course_Comment.objects.filter(course=course)
 
     if req.user.is_authenticated and not req.user.is_staff:
         student = goo4(Student, user=req.user)
 
-        if req.method == "POST":
-            comment = req.POST["comment"]
-            course_comment = Course_Comment.objects.create(
-                user=student, course=course, comment=comment
+        if req.method == "POST" and "comment" in req.POST:
+            form = CourseComment_form(req.POST)
+            form.save(student=student, course=course)
+            return HttpResponseRedirect(
+                reverse("Course_detail", kwargs={"course_id": course_id})
             )
-            print(course_comment)
-            course_comment.save()
+
+        elif req.method == "POST" and "reply" in req.POST:
+            form = ReplyForm(req.POST)
+            comment_id = req.POST["the_comment"]
+            print(form)
+            if form.is_valid():
+                form.save(user=req.user, comment=comment_id)
+                return HttpResponseRedirect(
+                    reverse("Course_detail", kwargs={"course_id": course_id})
+                )
+            else:
+                messages.error(req, "There was an error with the reply")
+                return HttpResponseRedirect(
+                    reverse("Course_detail", kwargs={"course_id": course_id})
+                )
 
         context = {"course": course, "comments": comments}
         return render(req, "course-details.html", context)
     else:
-        context = {"course": course, "comments": comments}
         return render(req, "course-details.html", context)
 
 

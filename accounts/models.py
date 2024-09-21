@@ -45,8 +45,19 @@ class Student(models.Model):
 
 # Replies to comments
 class Reply(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     reply = models.TextField()
     date_time = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.reply}"
+
+    def get_student(self):
+        for student in Student.objects.all():
+            if self.user == student.user:
+                return student
+            else:
+                return None
 
 
 # comments
@@ -54,7 +65,7 @@ class Course_Comment(models.Model):
     user = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     comment = models.TextField()
-    reply = models.ManyToManyField(Reply, blank=True)
+    replies = models.ManyToManyField(Reply, blank=True)
     time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
