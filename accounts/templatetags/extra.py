@@ -12,4 +12,9 @@ def subscript(list, subscript):
     return list[subscript]
 
 
+@register.filter(name="invert")
+def func(list):
+    return list[-1:]
+
+
 register.filter("limit", limit)

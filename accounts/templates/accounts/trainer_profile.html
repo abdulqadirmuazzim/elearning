@@ -57,7 +57,7 @@
                                     <input type="file" name="passport_photo" accept="image/*" value="select file" required
                                         aria-invalid="true" id="id_passport_photo">
                                 </div>
-                                <button type="submit" class="btn">change</button>
+                                <button type="submit" class="btn-sign">change</button>
                             </form>
                             </div>
                     </div>
@@ -133,9 +133,9 @@
                         </div>
                         <div class="modal-footer">
                           
-                          <div style="display: flex; align-items: center; justify-content: space-around; width: 100%;">
-                            <a href="{% url 'delete_course' course.id %}"></a><button class="btn btn-danger">Delete</button>
-                            <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                          <div class="d-flex justify-content-center w-100">
+                            <a href="{% url 'delete_course' course.id %}"><button class="btn btn-danger mx-1">Delete</button></a>
+                            <button class="btn btn-secondary mx-1" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                           </div>
                       </div>
             

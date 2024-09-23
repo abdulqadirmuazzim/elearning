@@ -9,7 +9,7 @@ from .forms import (
     EditCoverPhoto as ECP,
     Edit_Student_picture,
 )
-from .models import Trainer, Student, Course
+from .models import Trainer, Student, Course, Course_Comment, Reply
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User, Permission
 from django.contrib import messages
@@ -434,6 +434,14 @@ def course_delete(req, course_id):
         messages.error(req, "You can't delete this course")
         return redirect("DashBoard")
     else:
+        # Get the comments of the course
+        comments = Course_Comment.objects.filter(course=course)
+        # Get the replies of the course
+        replies = [comment.replies.all() for comment in comments]
+        # delete the replies from the database
+        replies = [reply.delete() for reply in replies]
+        print(replies)
+        # then delete the course
         course.delete()
         messages.info(req, "You have successfully deleted this course")
         return redirect("DashBoard")

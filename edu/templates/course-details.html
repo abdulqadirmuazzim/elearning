@@ -160,10 +160,10 @@
           {{id}}
         {% for comment in comments %}
         <div class="card p-2">
-          <div class="card-header">
+          <div class="card-header d-flex align-items-center">
             {{comment.user}}
-            <img src="{{comment.user.profile_picture.url}}" alt="Profile Picture" class="profile-pic"> 
-            <p>{{comment.time}}</p>
+            <img src="{{comment.user.profile_picture.url}}" alt="Profile Picture" class="profile-pic mx-1"> 
+            <p class="mx-1 fst-italic">{{comment.time}}</p>
           </div>
           <div class="card-body">
             <!-- Title will be added in the future -->
@@ -175,21 +175,27 @@
               <!-- END EDIT FORM -->
             </p>
         <div class="card-footer text-body-secondary">
-
+            {% if user.is_authenticated %}
+              
+            
               {% if comment.user.user == user %}
               <div class="trainer-rank d-flex align-items-center">
                 <i class="bi bi-trash"></i>&nbsp;
                 &nbsp;&nbsp;
-                <i class="bi bi-pencil"></i>&nbsp;
+                <i class="bi bi-pencil mx-1"></i>&nbsp;
+                <i class="bi bi-heart mx-1" id="icon-{{comment.id}}"> {% if comment.likes.count %} {{comment.likes.count}} {% endif %} </i>
+                <button class="btn-none mx-1" onclick="formAppear('{{comment.id}}')" ><i class="bi bi-reply"></i>&nbsp;</button>
               </div>
-              <!-- <button class="btn-none" onclick="formAppear('{{comment.id}}')" ><i class="bi bi-reply"></i>&nbsp;</button> -->
               {% else %}
               <div class="trainer-rank d-flex align-items-center">
-                <button class="btn-none"><i class="bi bi-heart"></i>&nbsp;</button>
+                <button class="btn-none like-comment" onclick="likeComment(`{% url 'Like_comment' comment.id %}`, `icon-{{comment.id}}`)">
+                  <i class="bi bi-heart" id="icon-{{comment.id}}"> {{comment.likes.count}} </i>
+                  &nbsp;
+                </button>
                 &nbsp;&nbsp;
                 <button class="btn-none" onclick="formAppear('{{comment.id}}')" ><i class="bi bi-reply"></i>&nbsp;</button>
               </div>
-
+              {% endif %}
               <!-- Reply Form -->
               <form action="" method="post" id="reply-form{{comment.id}}" class="form-control" style="display: none;">
                 {% csrf_token %}
@@ -201,8 +207,8 @@
                 </div>
               </form>
               <!-- End of reply form -->
-
-              {% endif %}
+              
+            {% endif %}
               <!-- Replies section-->
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                   <div class="accordion-item">
@@ -213,7 +219,7 @@
                     </h2>
                     {% for reply in comment.replies.all %}
                       <div id="flush-collapseOne{{comment.id}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body"> {{reply}} </div>
+                        <div class="accordion-body d-flex justify-content-start"> <img src="{{reply.get_student.profile_picture.url}}" alt="" class="profile-pic"> <p class=" description mx-3">{{reply.get_student}}</p> {{reply}} </div>
                       </div>
                       {% empty %}
                       <div id="flush-collapseOne{{comment.id}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -291,6 +297,32 @@
               const form = document.getElementById(`reply-form${id}`)
               form.style.display = "none"
             })
+        }
+        const likeComment = (url, id) => {
+          let likeIcon = document.querySelectorAll(".like-comment")
+          likeIcon.forEach(element=>{
+            fetch(url,
+            {
+              method:"POST",
+              headers: {
+                'X-CSRFToken': '{{csrf_token}}',
+                'Content-Type': 'application/json'
+              }, }).then(res => res.json).then((data) => {
+                console.log(data);
+                ()=> {
+                  let isLiked = document.getElementById(`icon-${id}`)
+                  if (isLiked.classList.contains('bi-heart')) {
+                  document.getElementById(`like-count${id}`).innerHTML++
+                  document.getElementById(`icon-${id}`).className = "bi bi-heart-fill"
+                  qty = qty+ 1
+              }else{
+                      document.getElementById(`like-count${id}`).innerHTML--
+                      document.getElementById(`icon-${id}`).className = "bi bi-heart"
+                  }
+                }
+              }) .catch(err=>console.log(err))
+          })
+
         }
         
     </script>

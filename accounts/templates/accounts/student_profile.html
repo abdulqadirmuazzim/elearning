@@ -111,8 +111,7 @@
                           </div>
           
                           <h3><a href="{% url 'Course_detail' course.id %}">{{course.course_name}}</a></h3>
-                          <p class="description">Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae
-                            dolores dolorem tempore.</p>
+                          <p class="description"> {{course.description|truncatewords:20}} </p>
                           <div class="trainer d-flex justify-content-between align-items-center">
                             <div class="trainer-profile d-flex align-items-center">
                                 <img src="{{course.trainer.passport_photo.url}}" class="img-fluid" alt="">

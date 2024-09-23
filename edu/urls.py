@@ -7,6 +7,7 @@ urlpatterns = [
     path("about", v.about, name="About"),
     path("courses", v.courses, name="Courses"),
     path("course-detail/<int:course_id>", v.course_detail, name="Course_detail"),
+    path("comment/<int:comment_id>", v.like_comments_toggle, name="Like_comment"),
     path("events", v.events, name="Events"),
     path("pricing", v.pricing, name="Pricing"),
     path("trainers", v.trainers, name="Train"),

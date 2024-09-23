@@ -3,12 +3,14 @@ from django.shortcuts import (
     redirect,
     get_object_or_404 as goo4,
     HttpResponseRedirect,
+    HttpResponse,
 )
 from .forms import comment, subscription, CourseComment_form, ReplyForm
 from accounts.models import Course, Trainer
 from django.contrib import messages
 from accounts.models import Course_Comment, Student, Reply
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -43,6 +45,7 @@ def courses(req):
 def course_detail(req, course_id):
     course = goo4(Course, id=course_id)
     comments = Course_Comment.objects.filter(course=course)
+    context = {"course": course, "comments": comments}
 
     if req.user.is_authenticated and not req.user.is_staff:
         student = goo4(Student, user=req.user)
@@ -69,15 +72,35 @@ def course_detail(req, course_id):
                     reverse("Course_detail", kwargs={"course_id": course_id})
                 )
 
-        context = {"course": course, "comments": comments}
         return render(req, "course-details.html", context)
     else:
+        if req.method == "POST":
+            form = ReplyForm(req.POST)
+            comment_id = req.POST["the_comment"]
+            print(form)
+            if form.is_valid():
+                form.save(user=req.user, comment=comment_id)
+                return HttpResponseRedirect(
+                    reverse("Course_detail", kwargs={"course_id": course_id})
+                )
+            else:
+                messages.error(req, "Something went wrong")
         return render(req, "course-details.html", context)
 
 
-# class course_detail(generic.detail):
-#     template_name = ""
-#     model = Course
+def like_comments_toggle(req, comment_id):
+    comment = goo4(Course_Comment, id=comment_id)
+    user = goo4(User, id=req.user.id)
+    if req.method == "POST":
+        if user in comment.likes.all():
+            comment.likes.remove(user)
+        else:
+            comment.likes.add(user)
+        return HttpResponseRedirect(
+            reverse("Like_comment", kwargs={"comment_id": comment_id})
+        )
+    else:
+        return HttpResponse("<h1> bad request </h1>")
 
 
 # events

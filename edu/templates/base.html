@@ -52,7 +52,6 @@
                     <li><a href="{% url 'About' %}" id="about">About</a></li>
                     <li><a href="{% url 'Courses' %}" id="courses">Courses</a></li>
                     <li><a href="{% url 'Train' %}" id="trainers">Trainers</a></li>
-                    <li><a href="{% url 'Events' %}" id="events">Events</a></li>
                     <li><a href="{% url 'Pricing' %}" id="pricing">Pricing</a></li>
                     
                     <li><a href="{% url 'Contact' %} " id="contact">Contact</a></li>
@@ -204,11 +203,11 @@
                                 e.preventDefault()
                                 fetch(id, {
                                         method: 'POST',
-                    headers: {
-                            'X-CSRFToken': '{{csrf_token}}',
-                            'Content-Type': 'application/json'
-                        },    
-                        }).then(response => response.json()).catch(error=>{console.log(error)})
+                                        headers: {
+                                                'X-CSRFToken': '{{csrf_token}}',
+                                                'Content-Type': 'application/json'
+                                                },    
+                                }).then(response => response.json()).catch(error=>{console.log(error)})
                     })      
                 })
     
