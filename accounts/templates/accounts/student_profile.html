@@ -121,21 +121,13 @@
                             <div class="trainer-rank d-flex align-items-center">
                         <i class="bi bi-person user-icon"></i>&nbsp;{{registered_students|subscript:course.course_name}}
                               &nbsp;&nbsp;
-                              {% if user in course.likes.all %}
-                              <form id="{% url 'like_course' course.id %}" class="like-form" onsubmit="like(`{{course.id}}`)">
+                              
+                              <form id="like-form{{course.id}}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn-none like-button{{course.id}}">
-                                    <i class="bi bi-heart-fill heart-icon" id="icon-{{course.id}}"></i>&nbsp;<p style="display: inline;" id="like-count{{course.id}}" >{{course.likes.count}}</p>
+                                <button type="submit" class="btn-none like-button{{course.id}}" onclick="handelLikes(`{% url 'like_course' course.id %}`, `like-form{{course.id}}`), updateLikes(`{{course.id}}`)">
+                                    <i class="bi {% if user in course.likes.all %} bi-heart-fill {% else %} bi-heart {% endif %}heart-icon" id="heart-{{course.id}}"> </i>&nbsp;<p class="d-inline" id="icon-{{course.id}}"> {{course.likes.count}}</p>
                                 </button>
-                            </form>
-                              {% else %}
-                              <form id="{% url 'like_course' course.id %}" class="like-form" onsubmit="like(`{{course.id}}`)">
-                                {% csrf_token %}
-                                <button type="submit" class="btn-none like-button{{course.id}}">
-                                    <i class="bi bi-heart heart-icon" id="icon-{{course.id}}"></i>&nbsp;<p style="display: inline;" id="like-count{{course.id}}" >{{course.likes.count}}</p>
-                                </button>
-                            </form>
-                            {% endif %}
+                            </form>                       
                             </div>
                           </div>
                         </div>

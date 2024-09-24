@@ -182,16 +182,25 @@
               <div class="trainer-rank d-flex align-items-center">
                 <i class="bi bi-trash"></i>&nbsp;
                 &nbsp;&nbsp;
+                <!-- edit -->
                 <i class="bi bi-pencil mx-1"></i>&nbsp;
-                <i class="bi bi-heart mx-1" id="icon-{{comment.id}}"> {% if comment.likes.count %} {{comment.likes.count}} {% endif %} </i>
+                <!-- Like disabled -->
+                <i class="bi bi-heart mx-1"> {% if comment.likes.count %} {{comment.likes.count}} {% endif %} </i>
+                <!-- Reply -->
                 <button class="btn-none mx-1" onclick="formAppear('{{comment.id}}')" ><i class="bi bi-reply"></i>&nbsp;</button>
               </div>
               {% else %}
               <div class="trainer-rank d-flex align-items-center">
-                <button class="btn-none like-comment" onclick="likeComment(`{% url 'Like_comment' comment.id %}`, `icon-{{comment.id}}`)">
-                  <i class="bi bi-heart" id="icon-{{comment.id}}"> {{comment.likes.count}} </i>
+                
+                <!-- Like button -->
+                 <form action="" id="like-form{{comment.id}}">
+                  {% csrf_token %}
+                <button type="submit" class="btn-none like-comment" onclick="handelLikes(`{% url 'Like_comment' comment.id %}`,`like-form{{comment.id}}`, updateLikes(`{{comment.id}}`))">
+                  <i class="bi {% if user in comment.likes.all %} bi-heart-fill {% else %} bi-heart {% endif %}" id="heart-{{comment.id}}"></i><p class="d-inline" id="icon-{{comment.id}}"> {{comment.likes.count}}</p>
                   &nbsp;
                 </button>
+                </form>
+                <!-- Reply -->
                 &nbsp;&nbsp;
                 <button class="btn-none" onclick="formAppear('{{comment.id}}')" ><i class="bi bi-reply"></i>&nbsp;</button>
               </div>
@@ -219,7 +228,7 @@
                     </h2>
                     {% for reply in comment.replies.all %}
                       <div id="flush-collapseOne{{comment.id}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body d-flex justify-content-start"> <img src="{{reply.get_student.profile_picture.url}}" alt="" class="profile-pic"> <p class=" description mx-3">{{reply.get_student}}</p> {{reply}} </div>
+                        <div class="accordion-body d-flex justify-content-start"> <img src="{{reply.get_student.profile_picture.url}}" alt="" class="profile-pic"> <p class=" fst-italic fw-lighter mx-2">{{reply.get_student}}:</p> <p>{{reply}}</p> </div>
                       </div>
                       {% empty %}
                       <div id="flush-collapseOne{{comment.id}}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -298,33 +307,7 @@
               form.style.display = "none"
             })
         }
-        const likeComment = (url, id) => {
-          let likeIcon = document.querySelectorAll(".like-comment")
-          likeIcon.forEach(element=>{
-            fetch(url,
-            {
-              method:"POST",
-              headers: {
-                'X-CSRFToken': '{{csrf_token}}',
-                'Content-Type': 'application/json'
-              }, }).then(res => res.json).then((data) => {
-                console.log(data);
-                ()=> {
-                  let isLiked = document.getElementById(`icon-${id}`)
-                  if (isLiked.classList.contains('bi-heart')) {
-                  document.getElementById(`like-count${id}`).innerHTML++
-                  document.getElementById(`icon-${id}`).className = "bi bi-heart-fill"
-                  qty = qty+ 1
-              }else{
-                      document.getElementById(`like-count${id}`).innerHTML--
-                      document.getElementById(`icon-${id}`).className = "bi bi-heart"
-                  }
-                }
-              }) .catch(err=>console.log(err))
-          })
 
-        }
-        
     </script>
 
   </main>

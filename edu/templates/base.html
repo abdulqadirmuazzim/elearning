@@ -196,33 +196,48 @@
     <script>
         // LIKE BUTTON FUNCTIONALITY
         // update our database in the backend
-        let submit = document.querySelectorAll(".like-form")
-        submit.forEach(function (element){
-                        let id = element.id
-                        element.addEventListener("submit", (e)=>{
-                                e.preventDefault()
-                                fetch(id, {
-                                        method: 'POST',
-                                        headers: {
-                                                'X-CSRFToken': '{{csrf_token}}',
-                                                'Content-Type': 'application/json'
-                                                },    
-                                }).then(response => response.json()).catch(error=>{console.log(error)})
-                    })      
-                })
+        function handelLikes(url, id){
+            let submit = document.getElementById(id)
+            // submit.forEach(function (element){
+                // let id = element.id
+                submit.addEventListener("submit", (e)=>{
+                    e.preventDefault();
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                                'X-CSRFToken': '{{csrf_token}}',
+                                'Content-Type': 'application/json'
+                            }
+                        }).then(response => response.json()).catch(error=>{console.log(error)});
+                    
+                            })      
+                        // })
+                }
+        function updateLikes(id){
+            let isLiked = document.getElementById(`icon-${id}`)
+            let heart = document.getElementById(`heart-${id}`)
+            
+            if (heart.classList.contains('bi-heart')) {
+            isLiked.innerHTML++
+            heart.className = "bi bi-heart-fill"
+        }else{
+                isLiked.innerHTML--
+                heart.className = "bi bi-heart"
+            }
+        }
     
     // Update our likes in the front end
-    function like(id){
-          let isLiked = document.getElementById(`icon-${id}`)
-          if (isLiked.classList.contains('bi-heart')){
-                  document.getElementById(`like-count${id}`).innerHTML++
-                  document.getElementById(`icon-${id}`).className = "bi bi-heart-fill"
-                  qty = qty+ 1
-              }else{
-                      document.getElementById(`like-count${id}`).innerHTML--
-                      document.getElementById(`icon-${id}`).className = "bi bi-heart"
-                  }
-                }
+    // function like(id){
+    //       let isLiked = document.getElementById(`icon-${id}`)
+    //       if (isLiked.classList.contains('bi-heart')){
+    //               document.getElementById(`like-count${id}`).innerHTML++
+    //               document.getElementById(`icon-${id}`).className = "bi bi-heart-fill"
+    //               qty = qty+ 1
+    //           }else{
+    //                   document.getElementById(`like-count${id}`).innerHTML--
+    //                   document.getElementById(`icon-${id}`).className = "bi bi-heart"
+    //               }
+    //             }
                 //  </script>
 
     <script src="{% static 'assets/js/main.js' %}"></script>

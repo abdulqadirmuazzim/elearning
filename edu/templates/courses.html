@@ -102,6 +102,10 @@
                   </div>
 
                   <div class="trainer-rank d-flex align-items-center">
+                    {% if course in RegisteredCourses %}
+                    <i class="bi bi-check2-all fs-4 mx-1" data-bs-toggle="tooltip" data-bs-title="Registered course"></i>
+                    {% endif %}
+  
                     <i class="bi bi-person user-icon"></i>&nbsp;{{registered_students|subscript:course.course_name}}
                     &nbsp;&nbsp;
                     {% if not user.is_staff and user.is_authenticated %}
@@ -129,12 +133,8 @@
                 
                 <div class="reg d-flex justify-content-between align-items-center">
                   {% if not user.is_staff and course not in RegisteredCourses %}
-                      <button class="btn btn-info mx-1" class="btn-none mx-2 my-2" data-bs-toggle="modal" data-bs-target="#registerModal{{course.id}}"> Register</button>
+                      <button class="btn btn-info mx-1 my-2" data-bs-toggle="modal" data-bs-target="#registerModal{{course.id}}"> Register</button>
 
-
-                    {% elif course not in RegisteredCourses %}
-  
-                    <p> Registered </p>
                     {% else %}
   
                   {% endif %}
@@ -177,6 +177,10 @@
     </section><!-- /Courses Section -->
 
   </main>
+  <script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  </script>
   {% endblock %}
 
 
