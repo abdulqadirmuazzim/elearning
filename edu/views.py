@@ -88,6 +88,11 @@ def course_detail(req, course_id):
         return render(req, "course-details.html", context)
 
 
+def make_comment(req):
+    if req.method == "POST":
+        req.POST["comment"]
+
+
 def like_comments_toggle(req, comment_id):
     comment = goo4(Course_Comment, id=comment_id)
     user = goo4(User, id=req.user.id)
@@ -101,6 +106,32 @@ def like_comments_toggle(req, comment_id):
         )
     else:
         return HttpResponse("<h1> bad request </h1>")
+
+
+def edit_comment(req, comment_id):
+    if req.method == "POST":
+        new_comment = req.POST["comment"]
+        old_comment = goo4(Course_Comment, id=comment_id)
+        old_comment.comment = new_comment
+        old_comment.save()
+        messages.success(req, "Comment Changed")
+        return redirect(
+            reverse("Course_detail", kwargs={"course_id": old_comment.course.id})
+        )
+    return redirect(
+        reverse("Course_detail", kwargs={"course_id": old_comment.course.id})
+    )
+
+
+def delete_comment(req, comment_id):
+    comment = goo4(Course_Comment, id=comment_id)
+    # our replies aren't going to be deleted automatically so let's delete them
+    # get the replies
+    replies = comment.replies.all()
+    [reply.delete() for reply in replies]
+
+    comment.delete()
+    return redirect(reverse("Course_detail", kwargs={"course_id": comment.course.id}))
 
 
 # events

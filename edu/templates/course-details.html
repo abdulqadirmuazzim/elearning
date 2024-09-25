@@ -143,21 +143,20 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         {% if user.is_authenticated %}
         <!-- h1 title -->
-        <h1>Comments</h1> {% if not user.is_staff %} <button id="btn-show" class="inline-button" onclick="showComment()">Add a comment</button> {% endif %}
+        <h1>Comments</h1> {% if not user.is_staff %} <button id="btn-show" class="btn btn-success my-3 d-inline-block" onclick="showComment()">Add a comment</button> {% endif %}
         
         <!-- Comment Form -->
          <form action="{% url 'Course_detail' course.id %}" id="comment-form" method="post" style="display: none;">
               {% csrf_token %}
           <textarea name="comment" id="" class="form-control" rows="3" required></textarea>
-          <button type="submit" class=" inline-button btn-primary mb-3">Comment</button>
-          <button type="button" id="cancel" class="inline-button inline-danger" onclick="hideComment()">Cancel</button>
+          <button type="submit" class="btn btn-success mx-1 my-2">Comment</button>
+          <button type="button" id="cancel" class="btn btn-outline-danger my-2 mx-1" onclick="hideComment()">Cancel</button>
           </form>
         <!-- End Comment Form -->
           
         {% endif %}
         
         <div class="vstack gap-1 comments">
-          {{id}}
         {% for comment in comments %}
         <div class="card p-2">
           <div class="card-header d-flex align-items-center">
@@ -168,22 +167,31 @@
           <div class="card-body">
             <!-- Title will be added in the future -->
             <!-- <h5 class="card-title">Special title treatment</h5> -->
-            <p class="card-text">
+            <p class="card-text" id="comment-{{comment.id}}">
               {{comment}}
-              <!-- EDIT FORM -->
-               <!-- add an edit form here -->
-              <!-- END EDIT FORM -->
             </p>
+            <!-- Comment edit form -->
+            <form action="{% url 'Edit_comment' comment.id %}" method="post" class="form-control" style="display: none;" id="edit-form{{comment.id}}">
+              {% csrf_token %}
+              <textarea name="comment" id="" cols="30" class="w-100 py-1 px-1">{{comment}}</textarea>
+              <div class="d-flex">
+              <button type="submit" class="btn btn-success my-2, mx-2">Change</button>
+              <button type="button" class="btn btn-outline-danger my-2, mx-2" onclick="abortChange('{{comment.id}}')">cancel</button>
+            </div>
+          </form>
+          <!-- End of edit form -->
+
         <div class="card-footer text-body-secondary">
             {% if user.is_authenticated %}
               
             
               {% if comment.user.user == user %}
               <div class="trainer-rank d-flex align-items-center">
-                <i class="bi bi-trash"></i>&nbsp;
+                <!-- Delete -->
+                <button class="btn-none" data-bs-toggle="modal" data-bs-target="#commentDelete{{comment.id}}"><i class="bi bi-trash"></i>&nbsp;</button>
                 &nbsp;&nbsp;
                 <!-- edit -->
-                <i class="bi bi-pencil mx-1"></i>&nbsp;
+                <button class="btn-none" id="edit-comment{{comment.id}}" onclick="editComment('{{comment.id}}')"><i class="bi bi-pencil mx-1"></i>&nbsp;</button>
                 <!-- Like disabled -->
                 <i class="bi bi-heart mx-1"> {% if comment.likes.count %} {{comment.likes.count}} {% endif %} </i>
                 <!-- Reply -->
@@ -211,12 +219,33 @@
                 <input type="hidden" value="{{comment.id}}" name="the_comment">
                 <textarea name="reply" id="reply-text" class="form-control-sm w-100 h-75"></textarea>
                 <div class="d-flex">
-                  <button type="submit" class="btn btn-primary mx-1 my-1" >reply</button>
+                  <button type="submit" class="btn btn-success mx-1 my-1" >reply</button>
                   <button type="button" class="btn btn-outline-danger mx-1 my-1" onclick="formDelete('{{comment.id}}')">cancel</button>
                 </div>
               </form>
               <!-- End of reply form -->
               
+              <!-- Modal for Deleting comments -->
+                <div class="modal fade" id="commentDelete{{comment.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">   
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Profile Picture</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                  <p class="fs-5">Are you sure you want to delete this comment?</p>
+                                  <div class="d-flex">
+                                    <a href="{% url 'Delete_comment' comment.id %}"><button class="btn btn-danger mx-2">delete</button></a>
+                                    <button class="btn btn-light mx-2" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                  </div>
+                                </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              <!-- End Modal -->
             {% endif %}
               <!-- Replies section-->
                 <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -291,7 +320,28 @@
             button.style.display = "block"
           })
         }
-   
+        
+          // Edit button
+          let editComment = (id) => {
+            let commentEdit = document.getElementById(`comment-${id}`)
+            let commentEditForm2 = document.getElementById(`edit-form${id}`)
+            
+            document.addEventListener("click", ()=>{
+              commentEditForm2.style.display = "block"
+              commentEdit.style.display = "none"
+            })
+          }
+          
+          let abortChange = (id) => {
+            let commentEdit = document.getElementById(`comment-${id}`)
+            let commentEditForm2 = document.getElementById(`edit-form${id}`)
+
+            document.addEventListener("click", ()=>{
+              commentEditForm2.style.display = "none"
+              commentEdit.style.display = "block"
+            })
+            
+          }
 
         // Function to make reply form appear
         function formAppear(id){
